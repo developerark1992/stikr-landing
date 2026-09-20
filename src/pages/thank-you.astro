@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Thank you — STIKR" description="Your STIKR order details are saved. We’ll take payment next.">
+<Layout title="Thank you — STIKR" description="Your STIKR payment and delivery details.">
   <header class="ty-header">
     <div class="wrap ty-bar">
       <a class="logo" href="/" aria-label="STIKR home">
@@ -29,7 +29,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="product">
           <img src="/images/product.png" alt="STIKR pouch" />
           <div>
-            <p class="lime display small">Order confirmed</p>
+            <p class="lime display small" data-ty-status>Order confirmed</p>
             <h2 data-ty-id></h2>
             <p data-ty-product>STIKR magnetic gym pouch</p>
           </div>
@@ -62,14 +62,18 @@ import Layout from "../layouts/Layout.astro";
             <dt>Unit price</dt>
             <dd data-ty-unit></dd>
           </div>
+          <div data-ty-discount-row hidden>
+            <dt data-ty-discount-label>Discount</dt>
+            <dd class="lime" data-ty-discount></dd>
+          </div>
           <div class="total">
-            <dt>Total</dt>
+            <dt>Invoice total</dt>
             <dd class="display lime" data-ty-total></dd>
           </div>
         </dl>
       </section>
 
-      <p class="fine">No payment is taken yet. We’ll use this order when the payment API is connected.</p>
+      <p class="fine" data-ty-fine>Paid securely with Nomod. We’ll use these details for delivery.</p>
 
       <div class="ty-actions">
         <a class="btn" href="/">Back to STIKR</a>
@@ -204,6 +208,10 @@ import Layout from "../layouts/Layout.astro";
     font-size: 16px;
   }
 
+  dl > div[hidden] {
+    display: none;
+  }
+
   dt {
     color: var(--muted);
     flex-shrink: 0;
@@ -287,9 +295,30 @@ import Layout from "../layouts/Layout.astro";
     order = null;
   }
 
+  const paid = new URLSearchParams(location.search).get("paid") === "1";
+  const ref = new URLSearchParams(location.search).get("ref");
+
+  if (!order?.id && paid && ref) {
+    order = {
+      id: ref,
+      product: "STIKR magnetic gym pouch",
+      quantity: "—",
+      unitPrice: "—",
+      total: "—",
+      customer: {},
+      status: "paid",
+    };
+  }
+
   if (!order?.id) {
     if (empty) empty.hidden = false;
   } else if (ok) {
+    if (paid) {
+      order.status = "paid";
+      if (ref) order.id = ref;
+      localStorage.setItem("stikr-pending-order", JSON.stringify(order));
+    }
+
     ok.hidden = false;
     const customer = order.customer || {};
     const address = [customer.address1, customer.address2, customer.city, customer.region, customer.country]
@@ -301,15 +330,28 @@ import Layout from "../layouts/Layout.astro";
       if (node) node.textContent = value;
     };
 
-    set("[data-ty-lead]", `Thanks ${customer.name || ""}. Order ${order.id} is saved for delivery.`);
+    set("[data-ty-lead]", paid
+      ? `Thanks ${customer.name || ""}. Payment for order ${order.id} is confirmed.`
+      : `Thanks ${customer.name || ""}. Order ${order.id} is saved for delivery.`);
+    set("[data-ty-status]", paid ? "Paid with Nomod" : "Order confirmed");
     set("[data-ty-id]", order.id);
-    set("[data-ty-product]", `${order.product} × ${order.quantity}`);
+    set("[data-ty-product]", order.quantity === "—" ? order.product : `${order.product} × ${order.quantity}`);
     set("[data-ty-name]", customer.name || "—");
     set("[data-ty-phone]", customer.phone || "—");
     set("[data-ty-email]", customer.email || "—");
     set("[data-ty-address]", address || "—");
     set("[data-ty-qty]", String(order.quantity));
-    set("[data-ty-unit]", `AED ${order.unitPrice}`);
-    set("[data-ty-total]", `AED ${order.total}`);
+    set("[data-ty-unit]", order.unitPrice === "—" ? "—" : `AED ${order.unitPrice}`);
+    const discountRow = document.querySelector("[data-ty-discount]");
+    const discountLabel = document.querySelector("[data-ty-discount-label]");
+    const discountWrap = document.querySelector("[data-ty-discount-row]");
+    if (typeof order.discountPercent === "number" && order.discountPercent > 0) {
+      if (discountWrap) discountWrap.hidden = false;
+      if (discountLabel) discountLabel.textContent = `Discount (${order.discountPercent}% off invoice)`;
+      if (discountRow) discountRow.textContent = `−AED ${order.discount ?? order.subtotal - order.total}`;
+    } else if (discountWrap) {
+      discountWrap.hidden = true;
+    }
+    set("[data-ty-total]", order.total === "—" ? "—" : `AED ${order.total}`);
   }
 </script>

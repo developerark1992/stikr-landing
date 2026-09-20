@@ -1,0 +1,82 @@
+<div class="claim-bar" data-claim-bar hidden>
+  <p data-claim-copy>You won a spin discount.</p>
+  <a class="claim-go" href="/checkout?offer=spin" data-claim-go>Claim discount</a>
+</div>
+
+<style>
+  .claim-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+    background: var(--lime);
+    color: #111;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .claim-bar[hidden] {
+    display: none;
+  }
+
+  .claim-bar p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .claim-go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: #111;
+    color: var(--lime);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .claim-bar {
+      padding: 12px 16px 16px;
+    }
+
+    .claim-go {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  import { loadSpinWin } from "../scripts/offer.js";
+
+  const bar = document.querySelector("[data-claim-bar]");
+  const copy = document.querySelector("[data-claim-copy]");
+
+  const sync = () => {
+    const win = loadSpinWin();
+    const claiming = new URLSearchParams(location.search).get("offer") === "spin";
+    if (!bar) return;
+    if (!win || win.claimed || win.percent <= 0 || claiming) {
+      bar.hidden = true;
+      document.body.style.paddingBottom = "";
+      return;
+    }
+    if (copy) copy.textContent = `You won ${win.percent}% off your invoice. Claim it this session — it won’t stack with Black Friday.`;
+    bar.hidden = false;
+    document.body.style.paddingBottom = `${bar.getBoundingClientRect().height}px`;
+  };
+
+  window.addEventListener("stikr-spin-win", sync);
+  window.addEventListener("resize", () => {
+    if (bar && !bar.hidden) document.body.style.paddingBottom = `${bar.getBoundingClientRect().height}px`;
+  });
+  sync();
+</script>

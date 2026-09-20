@@ -1,0 +1,341 @@
+<div class="bf-overlay" data-bf-overlay hidden>
+  <div class="bf-card" role="dialog" aria-modal="true" aria-labelledby="bf-title">
+    <div class="bf-copy">
+      <h2 id="bf-title" class="display">Black Friday Sale</h2>
+      <p>
+        A limited-time Black Friday offer, available only while the timer runs.
+        Secure your discount now.
+      </p>
+      <div class="bf-clock" aria-live="polite">
+        <div class="bf-unit">
+          <div class="bf-pair" data-bf-hours>00</div>
+          <span class="bf-label">Hours</span>
+        </div>
+        <span class="bf-colon" aria-hidden="true">:</span>
+        <div class="bf-unit">
+          <div class="bf-pair" data-bf-minutes>00</div>
+          <span class="bf-label">Minutes</span>
+        </div>
+        <span class="bf-colon" aria-hidden="true">:</span>
+        <div class="bf-unit">
+          <div class="bf-pair" data-bf-seconds>59</div>
+          <span class="bf-label">Seconds</span>
+        </div>
+      </div>
+      <a class="bf-cta" href="/checkout?offer=bf">Redeem Now</a>
+    </div>
+    <div class="bf-photo">
+      <img src="/images/bf-popup.png" alt="STIKR pouch on the gym machine" />
+      <button class="bf-close" type="button" data-bf-close aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 3l8 8M11 3l-8 8" stroke="#111" stroke-width="1.6"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 85;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+  }
+
+  .bf-overlay[hidden] {
+    display: none;
+  }
+
+  .bf-card {
+    display: flex;
+    width: min(760px, 100%);
+    overflow: hidden;
+    background: #fff;
+    color: #111;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .bf-copy {
+    flex: 1 1 56%;
+    padding: 32px 28px 26px;
+    text-align: center;
+  }
+
+  .bf-copy h2 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 3.6vw, 38px);
+    line-height: 1;
+    color: #111;
+  }
+
+  .bf-copy p {
+    max-width: 360px;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #555;
+  }
+
+  .bf-clock {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .bf-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 88px;
+  }
+
+  .bf-pair {
+    display: block;
+    width: 1.35em;
+    overflow: hidden;
+    font-family: var(--display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .bf-colon {
+    padding-top: 4px;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 52px;
+    line-height: 0.9;
+    color: #111;
+  }
+
+  .bf-label {
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a8a8a;
+  }
+
+  .bf-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    background: #111;
+    color: var(--lime);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .bf-cta:hover {
+    filter: brightness(1.12);
+  }
+
+  .bf-photo {
+    position: relative;
+    flex: 0 0 42%;
+    min-height: 300px;
+  }
+
+  .bf-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 55% 42%;
+    max-width: none;
+  }
+
+  .bf-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+
+  @media (max-width: 760px) {
+    .bf-overlay {
+      padding: 16px;
+      align-items: center;
+    }
+
+    .bf-card {
+      flex-direction: column;
+      max-height: calc(100dvh - 32px);
+      overflow: auto;
+    }
+
+    .bf-photo {
+      flex: none;
+      width: 100%;
+      min-height: 180px;
+      height: 200px;
+      order: -1;
+    }
+
+    .bf-copy {
+      padding: 22px 18px 20px;
+    }
+
+    .bf-copy h2 {
+      font-size: 28px;
+    }
+
+    .bf-pair {
+      font-size: 42px;
+    }
+
+    .bf-colon {
+      font-size: 34px;
+      padding-top: 2px;
+    }
+
+    .bf-unit {
+      min-width: 64px;
+    }
+
+    .bf-clock {
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .bf-pair {
+      font-size: 34px;
+    }
+
+    .bf-colon {
+      font-size: 28px;
+    }
+
+    .bf-unit {
+      min-width: 52px;
+    }
+  }
+
+</style>
+
+<script>
+  const overlay = document.querySelector("[data-bf-overlay]");
+  const closeBtn = document.querySelector("[data-bf-close]");
+  const spin = document.querySelector("[data-spin-overlay]");
+  const cta = document.querySelector("#cta");
+  let remaining = 59;
+  let ticking = false;
+  let skipUntilLeave = false;
+
+  const pad = (value) => String(value).padStart(2, "0");
+
+  const renderClock = () => {
+    const hours = Math.floor(remaining / 3600);
+    const minutes = Math.floor((remaining % 3600) / 60);
+    const seconds = remaining % 60;
+    const hoursEl = document.querySelector("[data-bf-hours]");
+    const minutesEl = document.querySelector("[data-bf-minutes]");
+    const secondsEl = document.querySelector("[data-bf-seconds]");
+    if (hoursEl) hoursEl.textContent = pad(hours);
+    if (minutesEl) minutesEl.textContent = pad(minutes);
+    if (secondsEl) secondsEl.textContent = pad(seconds);
+  };
+
+  const tick = () => {
+    remaining = remaining <= 0 ? 59 : remaining - 1;
+    renderClock();
+  };
+
+  const open = () => {
+    if (!overlay || !overlay.hidden) return;
+    if (spin && !spin.hidden) return;
+    if (skipUntilLeave) return;
+    remaining = 59;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    renderClock();
+    if (!ticking) {
+      ticking = true;
+      window.setInterval(tick, 1000);
+    }
+  };
+
+  const hide = () => {
+    if (!overlay) return;
+    overlay.hidden = true;
+    if (nearCta()) skipUntilLeave = true;
+    unlockPage();
+  };
+
+  const unlockPage = () => {
+    const spinOpen = spin && !spin.hidden;
+    const bfOpen = overlay && !overlay.hidden;
+    if (!spinOpen && !bfOpen) document.body.style.overflow = "";
+  };
+
+  closeBtn?.addEventListener("click", hide);
+  overlay?.addEventListener("click", (event) => {
+    if (event.target === overlay) hide();
+  });
+  document.querySelector(".bf-cta")?.addEventListener("click", hide);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && overlay && !overlay.hidden) hide();
+  });
+
+  const nearCta = () => {
+    if (!cta) return false;
+    const rect = cta.getBoundingClientRect();
+    const vh = window.innerHeight || 0;
+    return rect.top < vh * 0.88 && rect.bottom > vh * 0.12;
+  };
+
+  const check = () => {
+    const near = nearCta();
+    if (!near) skipUntilLeave = false;
+    if (near) open();
+  };
+
+  const startWatching = () => {
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    if (cta && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(() => check(), {
+        threshold: [0, 0.12, 0.25, 0.5],
+        rootMargin: "20% 0px -8% 0px",
+      });
+      io.observe(cta);
+    }
+  };
+
+  window.setTimeout(startWatching, location.pathname === "/" ? 1400 : 0);
+
+  if (spin) {
+    new MutationObserver(() => {
+      if (spin.hidden) check();
+    }).observe(spin, { attributes: true, attributeFilter: ["hidden"] });
+  }
+</script>

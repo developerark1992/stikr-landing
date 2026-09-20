@@ -242,7 +242,7 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
 </style>
 
 <script>
-  import { applyOfferToPage, loadOffer, priceFromPercent, RETAIL, saveOffer } from "../scripts/offer.js";
+  import { priceFromPercent, RETAIL, saveSpinWin } from "../scripts/offer.js";
 
   const prizes = [
     { label: "5% off", type: "percent", value: 5 },
@@ -286,7 +286,8 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
   const hide = () => {
     if (!overlay || spinning) return;
     overlay.hidden = true;
-    document.body.style.overflow = "";
+    const bf = document.querySelector("[data-bf-overlay]");
+    if (!bf || bf.hidden) document.body.style.overflow = "";
   };
 
   const finish = (prize) => {
@@ -306,16 +307,11 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
 
     if (prize.type === "percent" && prize.value > 0) {
       const unitPrice = priceFromPercent(prize.value);
-      saveOffer({
-        percent: prize.value,
-        unitPrice,
-        label: `${prize.value}% off`,
-        source: "spin",
-      });
-      applyOfferToPage();
+      saveSpinWin(prize.value);
+      window.dispatchEvent(new Event("stikr-spin-win"));
       if (result) {
         result.hidden = false;
-        result.textContent = `You won ${prize.value}% off — you pay AED ${unitPrice} instead of AED ${RETAIL}`;
+        result.textContent = `You won ${prize.value}% off your full invoice — AED ${unitPrice} each instead of AED ${RETAIL}. Claim it this session. It won’t stack with Black Friday.`;
       }
       if (go) go.textContent = "Claim my discount";
       return;
@@ -324,7 +320,7 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
     if (prize.type === "percent") {
       if (result) {
         result.hidden = false;
-        result.textContent = "0% off this round. Black Friday pricing still applies.";
+        result.textContent = "0% off this round. Retail pricing still applies.";
       }
       if (go) go.textContent = "Continue";
       return;
@@ -332,7 +328,7 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
 
     if (result) {
       result.hidden = false;
-      result.textContent = "See you next time. Black Friday pricing still applies.";
+      result.textContent = "See you next time. Retail pricing still applies.";
     }
     if (go) go.textContent = "Close";
   };
@@ -341,7 +337,7 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
     if (spinning || !wheel || !go) return;
     if (go.textContent === "Claim my discount") {
       hide();
-      document.querySelector("#pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.location.href = "/checkout?offer=spin";
       return;
     }
     if (go.textContent === "Continue" || go.textContent === "Close") {
@@ -367,15 +363,13 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
     window.setTimeout(() => finish(prizes[index]), 4900);
   };
 
-  applyOfferToPage(loadOffer());
-
   go?.addEventListener("click", spin);
   close?.addEventListener("click", hide);
   overlay?.addEventListener("click", (event) => {
     if (event.target === overlay) hide();
   });
 
-  if (location.pathname === "/" && !sessionStorage.getItem("stikr-spun")) {
+  if (location.pathname === "/") {
     window.setTimeout(open, 900);
   }
 </script>

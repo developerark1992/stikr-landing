@@ -130,8 +130,8 @@ const costs = [
         <a class="btn hero-cta" href="/checkout">Keep me locked-in</a>
         <div class="price-stack">
           <p>Retail Price: <span class="lime display price-em">AED 149</span></p>
-          <p>Black Friday Sale: <span class="lime display price-em" data-save-label>save 20% today</span></p>
-          <p><strong>GET NOW:</strong> <span class="lime display price-em" data-now-price>AED 119</span></p>
+          <p>Black Friday Sale: <span class="lime display price-em">save 10% today</span></p>
+          <p><strong>GET NOW:</strong> <span class="lime display price-em">AED 134</span></p>
         </div>
       </div>
     </div>
@@ -376,8 +376,8 @@ const costs = [
         <div class="pricing-grid">
           <div class="price-card">
             <div class="price-row">
-              <span class="strike">Retail price AED 149</span>
-              <span class="sale">Black Friday Sale <strong class="lime" data-now-price>AED 119</strong></span>
+              <span>Retail price</span>
+              <strong class="display lime">AED 149</strong>
             </div>
             <ul>
               {costs.map((row) => (
@@ -393,9 +393,8 @@ const costs = [
             </ul>
             <div class="price-foot">
               <span>A permanent upgrade to your training flow.</span>
-              <strong class="display lime" data-now-price>AED 119</strong>
+              <strong class="display lime">AED 149</strong>
             </div>
-            <p class="price-note" data-discount-note hidden></p>
             <a class="btn full" href="/checkout">Upgrade My Training Setup</a>
           </div>
           <img src="/images/product.png" alt="STIKR product" />
@@ -410,7 +409,7 @@ const costs = [
             Train clean.<br />Train focused.<br />Train like an athlete.
           </h2>
           <p>Your essentials stay where you train — so your mind stays on the rep, not the clutter.</p>
-          <a class="cta-button" href="/checkout">
+          <a class="cta-button" href="/checkout?offer=bf">
             <span class="timer" data-timer>00:59</span>
             I’m ready to train distraction-free
           </a>

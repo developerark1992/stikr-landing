@@ -16,7 +16,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="chk-copy">
       <p class="lime display kicker">Checkout</p>
       <h1 class="display">Upgrade your training setup</h1>
-      <p class="lead">Tell us where to deliver STIKR. Payment will be connected next — this saves your order details.</p>
+      <p class="lead">Tell us where to deliver STIKR, then pay securely with Nomod — cards, Apple Pay, Google Pay, Tabby, and Tamara.</p>
     </div>
 
     <div class="chk-grid">
@@ -85,8 +85,10 @@ import Layout from "../layouts/Layout.astro";
           </label>
         </fieldset>
 
-        <button class="btn full" type="submit" data-place-order>Place order</button>
-        <p class="fine">No payment is taken yet. We’ll use this to create the product in your payment API next.</p>
+        <p class="pay-banner" data-pay-banner hidden></p>
+        <p class="pay-error" data-pay-error hidden></p>
+        <button class="btn full" type="submit" data-place-order>Pay with Nomod</button>
+        <p class="fine">You’ll be redirected to Nomod’s secure checkout. Cards, Apple Pay, Google Pay, Tabby, and Tamara.</p>
       </form>
 
       <aside class="chk-summary">
@@ -116,16 +118,24 @@ import Layout from "../layouts/Layout.astro";
             <dd data-retail>AED 149</dd>
           </div>
           <div>
-            <dt>Unit price</dt>
-            <dd class="lime" data-unit>AED 119</dd>
-          </div>
-          <div>
             <dt>Quantity</dt>
             <dd data-qty-label>1</dd>
           </div>
+          <div>
+            <dt>Subtotal</dt>
+            <dd data-subtotal>AED 149</dd>
+          </div>
+          <div data-discount-row hidden>
+            <dt data-discount-label>Discount</dt>
+            <dd class="lime" data-discount>−AED 0</dd>
+          </div>
+          <div>
+            <dt>Unit price</dt>
+            <dd class="lime" data-unit>AED 149</dd>
+          </div>
           <div class="total">
-            <dt>Total</dt>
-            <dd class="display lime" data-total>AED 119</dd>
+            <dt>Invoice total</dt>
+            <dd class="display lime" data-total>AED 149</dd>
           </div>
         </dl>
       </aside>
@@ -243,6 +253,32 @@ import Layout from "../layouts/Layout.astro";
     color: var(--muted);
   }
 
+  .pay-error,
+  .pay-banner {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .pay-error {
+    border: 1px solid #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    color: #ffb4b4;
+  }
+
+  .pay-banner {
+    border: 1px solid var(--lime);
+    background: rgba(210, 246, 84, 0.08);
+    color: var(--lime);
+  }
+
+  .pay-error[hidden],
+  .pay-banner[hidden] {
+    display: none;
+  }
+
   .chk-summary {
     background: var(--card);
     border-radius: var(--radius-lg);
@@ -348,6 +384,10 @@ import Layout from "../layouts/Layout.astro";
     font-size: 16px;
   }
 
+  dl > div[hidden] {
+    display: none;
+  }
+
   .total {
     border-top: 1px solid var(--line);
     margin-top: 8px;
@@ -385,9 +425,11 @@ import Layout from "../layouts/Layout.astro";
 </style>
 
 <script>
-  import { applyOfferToPage, loadOffer, RETAIL } from "../scripts/offer.js";
+  import { applyOfferToPage, invoiceTotals, markSpinClaimed, resolveCheckoutOffer, RETAIL, saveOffer } from "../scripts/offer.js";
 
-  const offer = loadOffer();
+  const params = new URLSearchParams(location.search);
+  const offer = resolveCheckoutOffer(location.search);
+  saveOffer(offer);
   applyOfferToPage(offer);
 
   const qtyInput = document.querySelector("[data-qty]");
@@ -395,7 +437,14 @@ import Layout from "../layouts/Layout.astro";
   const totalEl = document.querySelector("[data-total]");
   const qtyLabel = document.querySelector("[data-qty-label]");
   const retailEl = document.querySelector("[data-retail]");
+  const subtotalEl = document.querySelector("[data-subtotal]");
+  const discountEl = document.querySelector("[data-discount]");
+  const discountLabel = document.querySelector("[data-discount-label]");
+  const discountRow = document.querySelector("[data-discount-row]");
   const form = document.querySelector("[data-checkout]");
+  const payError = document.querySelector("[data-pay-error]");
+  const payBanner = document.querySelector("[data-pay-banner]");
+  const submitBtn = document.querySelector("[data-place-order]");
 
   if (retailEl) retailEl.textContent = `AED ${RETAIL}`;
 
@@ -405,11 +454,15 @@ import Layout from "../layouts/Layout.astro";
   };
 
   const render = () => {
-    const qty = readQty();
-    if (qtyInput) qtyInput.value = String(qty);
-    if (qtyLabel) qtyLabel.textContent = String(qty);
-    if (unitEl) unitEl.textContent = `AED ${offer.unitPrice}`;
-    if (totalEl) totalEl.textContent = `AED ${offer.unitPrice * qty}`;
+    const bill = invoiceTotals(offer, readQty());
+    if (qtyInput) qtyInput.value = String(bill.quantity);
+    if (qtyLabel) qtyLabel.textContent = String(bill.quantity);
+    if (unitEl) unitEl.textContent = `AED ${bill.unitPrice}`;
+    if (subtotalEl) subtotalEl.textContent = `AED ${bill.subtotal}`;
+    if (discountLabel) discountLabel.textContent = `Discount (${bill.percent}% off invoice)`;
+    if (discountEl) discountEl.textContent = bill.discount ? `−AED ${bill.discount}` : "AED 0";
+    if (discountRow) discountRow.hidden = bill.percent <= 0;
+    if (totalEl) totalEl.textContent = `AED ${bill.total}`;
   };
 
   document.querySelector("[data-qty-minus]")?.addEventListener("click", () => {
@@ -423,7 +476,16 @@ import Layout from "../layouts/Layout.astro";
   qtyInput?.addEventListener("input", render);
   render();
 
-  form?.addEventListener("submit", (event) => {
+  if (payBanner && params.get("payment") === "cancelled") {
+    payBanner.hidden = false;
+    payBanner.textContent = "Payment was cancelled. You can try again when you’re ready.";
+  }
+  if (payBanner && params.get("payment") === "failed") {
+    payBanner.hidden = false;
+    payBanner.textContent = "Payment didn’t go through. Check your details and try again.";
+  }
+
+  form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -431,23 +493,65 @@ import Layout from "../layouts/Layout.astro";
     }
 
     const data = Object.fromEntries(new FormData(form).entries());
-    const qty = readQty();
+    const bill = invoiceTotals(offer, readQty());
     const order = {
       id: `STIKR-${Date.now()}`,
       createdAt: new Date().toISOString(),
       product: "STIKR magnetic gym pouch",
-      quantity: qty,
-      unitPrice: offer.unitPrice,
+      quantity: bill.quantity,
+      unitPrice: bill.unitPrice,
       retail: RETAIL,
-      discountPercent: offer.percent,
+      subtotal: bill.subtotal,
+      discount: bill.discount,
+      discountPercent: bill.percent,
       discountSource: offer.source,
-      total: offer.unitPrice * qty,
+      total: bill.total,
       currency: "AED",
       customer: data,
       status: "pending_payment",
     };
 
-    localStorage.setItem("stikr-pending-order", JSON.stringify(order));
-    window.location.href = "/thank-you";
+    if (payError) {
+      payError.hidden = true;
+      payError.textContent = "";
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Redirecting to Nomod…";
+    }
+
+    if (offer.source === "spin") markSpinClaimed();
+
+    try {
+      const response = await fetch("/api/nomod-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quantity: bill.quantity,
+          discountPercent: offer.percent,
+          customer: data,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result?.url) {
+        throw new Error(result?.error || "Could not start Nomod checkout.");
+      }
+
+      order.id = result.orderId || order.id;
+      order.nomodCheckoutId = result.checkoutId || "";
+      order.unitPrice = result.unitPrice ?? order.unitPrice;
+      order.total = result.total ?? order.total;
+      localStorage.setItem("stikr-pending-order", JSON.stringify(order));
+      window.location.href = result.url;
+    } catch (error) {
+      if (payError) {
+        payError.hidden = false;
+        payError.textContent = error instanceof Error ? error.message : "Payment could not start.";
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Pay with Nomod";
+      }
+    }
   });
 </script>

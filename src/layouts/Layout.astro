@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import SpinPopup from "../components/SpinPopup.astro";
+import BfSalePopup from "../components/BfSalePopup.astro";
+import ClaimBar from "../components/ClaimBar.astro";
 
 interface Props {
   title?: string;
@@ -9,7 +11,7 @@ interface Props {
 
 const {
   title = "STIKR — Train distraction-free",
-  description = "Magnetic gym pouch that keeps your phone, keys, and headphones on the machine. Black Friday: AED 119.",
+  description = "Magnetic gym pouch that keeps your phone, keys, and headphones on the machine.",
 } = Astro.props;
 ---
 
@@ -32,5 +34,7 @@ const {
   <body>
     <slot />
     <SpinPopup />
+    <BfSalePopup />
+    <ClaimBar />
   </body>
 </html>
