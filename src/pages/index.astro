@@ -88,6 +88,26 @@ const costs = [
 ---
 
 <Layout>
+  <header class="site-header">
+    <div class="header-bar">
+      <a class="logo" href="#top" aria-label="STIKR home">
+        <img src="/images/logo.png" alt="STIKR" width="219" height="38" />
+      </a>
+      <div class="header-panel">
+        <nav class="nav" aria-label="Primary">
+          <a href="#top">Home</a>
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+        </nav>
+        <a class="btn header-cta" href="/checkout">Buy Now</a>
+      </div>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
   <section class="hero" id="top">
     <div class="hero-media">
       <img class="hero-still" src="/images/color-stay.png" alt="" />
@@ -98,24 +118,6 @@ const costs = [
         <span class="pill p3">Stays put through any workout</span>
       </div>
     </div>
-
-    <header class="site-header">
-      <div class="header-bar">
-        <a class="logo" href="#top" aria-label="STIKR home">
-          <img src="/images/logo.png" alt="STIKR" width="219" height="38" />
-        </a>
-        <nav class="nav" aria-label="Primary">
-          <a href="#top">Home</a>
-          <a href="#about">About</a>
-          <a href="#features">Features</a>
-          <a href="#pricing">Pricing</a>
-        </nav>
-        <a class="btn header-cta" href="/checkout">Buy Now</a>
-        <button class="menu-toggle" type="button" aria-label="Open menu" data-menu-toggle>
-          <span></span><span></span>
-        </button>
-      </div>
-    </header>
 
     <div class="wrap hero-copy">
       <h1 class="display lime">
@@ -307,6 +309,16 @@ const costs = [
           </button>
         ))}
       </div>
+      <script is:inline>
+        (() => {
+          const mobile = window.matchMedia("(max-width: 980px)").matches;
+          document.querySelectorAll("[data-color]").forEach((el, i) => {
+            const on = i === (mobile ? 0 : 4);
+            el.classList.toggle("is-open", on);
+            el.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+        })();
+      </script>
       <div class="wrap color-copy">
         <div>
           <p>
@@ -440,6 +452,14 @@ const costs = [
 </Layout>
 
 <style>
+  :global(html) {
+    scroll-padding-top: 96px;
+  }
+
+  :global(html.nav-open) {
+    overflow: hidden;
+  }
+
   .hero {
     position: relative;
     width: 100%;
@@ -450,11 +470,11 @@ const costs = [
   }
 
   .site-header {
-    position: absolute;
-    top: 1.11vw;
+    position: fixed;
+    top: 16px;
     left: 0;
     right: 0;
-    z-index: 6;
+    z-index: 50;
   }
 
   .header-bar {
@@ -467,9 +487,34 @@ const costs = [
     margin: 0 auto;
     padding: 0 20px;
     border-radius: 16px;
+    background: transparent;
+    position: relative;
+  }
+
+  .header-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .logo,
+  .header-panel,
+  .menu-toggle {
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-panel {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-left: auto;
   }
 
   .header-cta {
@@ -499,19 +544,29 @@ const costs = [
 
   .menu-toggle {
     display: none;
+    position: relative;
+    z-index: 60;
     width: 40px;
     height: 40px;
     border: 0;
+    padding: 0;
     background: transparent;
     color: white;
   }
 
   .menu-toggle span {
-    display: block;
+    position: absolute;
+    left: 10px;
+    right: 10px;
     height: 2px;
-    margin: 6px 0;
+    margin: 0;
     background: white;
+    transition: transform 220ms ease, opacity 220ms ease, top 220ms ease;
   }
+
+  .menu-toggle span:nth-child(1) { top: 13px; }
+  .menu-toggle span:nth-child(2) { top: 19px; }
+  .menu-toggle span:nth-child(3) { top: 25px; }
 
   .hero-copy {
     position: relative;
@@ -1386,6 +1441,10 @@ const costs = [
   }
 
   @media (max-width: 980px) {
+    :global(html) {
+      scroll-padding-top: 76px;
+    }
+
     .site-header {
       top: 10px;
     }
@@ -1405,34 +1464,72 @@ const costs = [
       height: 24px;
     }
 
-    .nav,
-    .header-cta {
-      display: none;
-    }
-
     .menu-toggle {
       display: block;
+      z-index: 60;
     }
 
-    .header-bar.is-open {
-      height: auto;
-      flex-wrap: wrap;
-      padding: 12px;
-    }
-
-    .header-bar.is-open .nav {
+    .header-bar .header-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 55;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      gap: 14px;
-      padding: 8px 0 4px;
-      font-size: 16px;
+      align-items: stretch;
+      justify-content: center;
+      gap: 28px;
+      margin: 0;
+      padding: 96px 28px 40px;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      transform: translateX(100%);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 280ms ease, visibility 280ms ease;
     }
 
-    .header-bar.is-open .header-cta {
+    .header-bar.is-open .header-panel {
+      transform: translateX(0);
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .header-bar.is-open .logo,
+    .header-bar.is-open .menu-toggle {
+      z-index: 62;
+    }
+
+    .header-bar.is-open .menu-toggle span:nth-child(1) {
+      top: 19px;
+      transform: rotate(45deg);
+    }
+
+    .header-bar.is-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .header-bar.is-open .menu-toggle span:nth-child(3) {
+      top: 19px;
+      transform: rotate(-45deg);
+    }
+
+    .nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 22px;
+      font-size: 32px;
+      line-height: 1.1;
+      font-family: "Oswald", sans-serif;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .header-cta {
       display: flex;
       width: 100%;
+      max-width: 360px;
+      height: 52px;
     }
 
     .hero {
@@ -1596,28 +1693,66 @@ const costs = [
     }
 
     .color-row {
+      flex-direction: column;
       width: 100%;
       max-width: 100%;
-      height: 420px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+      height: auto;
+      overflow: visible;
     }
 
     .color-col,
     .color-col.is-open {
-      flex: 0 0 82%;
-      height: 420px;
-      scroll-snap-align: start;
+      flex: none;
+      width: 100%;
+      height: 72px;
+      transition: height 400ms cubic-bezier(0.42, 0, 0.58, 1);
     }
 
-    .color-title,
+    .color-col.is-open {
+      height: min(72vw, 380px);
+    }
+
+    .color-num {
+      top: 50%;
+      left: 20px;
+      right: auto;
+      transform: translateY(-50%);
+      font-size: 18px;
+      line-height: 22px;
+      text-align: left;
+    }
+
     .color-short {
+      top: 50%;
+      bottom: auto;
+      left: 64px;
+      right: 20px;
+      transform: translateY(-50%);
+      font-size: 22px;
+      line-height: 24px;
+      text-align: left;
+    }
+
+    .color-col.is-open .color-num {
+      top: 16px;
+      left: 0;
+      right: 0;
+      transform: none;
+      text-align: center;
+    }
+
+    .color-title {
+      left: 20px;
+      bottom: 76px;
       font-size: 28px;
       line-height: 30px;
+      white-space: normal;
     }
 
     .color-copy-line {
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
       font-size: 16px;
       line-height: 24px;
     }
@@ -1735,15 +1870,12 @@ const costs = [
       line-height: 24px;
     }
 
-    .color-row,
-    .color-col,
-    .color-col.is-open {
-      height: 360px;
+    .color-col {
+      height: 76px;
     }
 
-    .color-col,
     .color-col.is-open {
-      flex-basis: 88%;
+      height: min(88vw, 340px);
     }
   }
 
@@ -1761,23 +1893,42 @@ const costs = [
 
 <script>
   const header = document.querySelector(".header-bar");
-  document.querySelector("[data-menu-toggle]")?.addEventListener("click", () => {
-    header?.classList.toggle("is-open");
+  const menuBtn = document.querySelector("[data-menu-toggle]");
+  const setMenu = (open) => {
+    header?.classList.toggle("is-open", open);
+    menuBtn?.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    document.documentElement.classList.toggle("nav-open", open);
+  };
+  menuBtn?.addEventListener("click", () => {
+    setMenu(!header?.classList.contains("is-open"));
   });
   header?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => header.classList.remove("is-open"));
+    link.addEventListener("click", () => setMenu(false));
   });
 
   const colorButtons = [...document.querySelectorAll("[data-color]")];
-  colorButtons.forEach((button) => {
+  const colorMq = window.matchMedia("(max-width: 980px)");
+  const setColorOpen = (index) => {
+    colorButtons.forEach((item, i) => {
+      const on = i === index;
+      item.classList.toggle("is-open", on);
+      item.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  };
+  let colorPicked = false;
+  const applyColorDefault = () => {
+    if (colorPicked) return;
+    setColorOpen(colorMq.matches ? 0 : 4);
+  };
+  colorButtons.forEach((button, index) => {
     button.addEventListener("click", () => {
-      colorButtons.forEach((item) => {
-        const on = item === button;
-        item.classList.toggle("is-open", on);
-        item.setAttribute("aria-pressed", on ? "true" : "false");
-      });
+      colorPicked = true;
+      setColorOpen(index);
     });
   });
+  applyColorDefault();
+  colorMq.addEventListener("change", applyColorDefault);
 
   const form = document.querySelector("[data-signup]");
   form?.addEventListener("submit", (event) => {
