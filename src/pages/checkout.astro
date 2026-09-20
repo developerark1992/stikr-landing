@@ -1,0 +1,453 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Checkout — STIKR" description="Complete your STIKR order. Delivery details and quantity.">
+  <header class="chk-header">
+    <div class="wrap chk-bar">
+      <a class="logo" href="/" aria-label="STIKR home">
+        <img src="/images/logo.png" alt="STIKR" width="219" height="38" />
+      </a>
+      <a class="back" href="/#pricing">Back to product</a>
+    </div>
+  </header>
+
+  <main class="wrap chk">
+    <div class="chk-copy">
+      <p class="lime display kicker">Checkout</p>
+      <h1 class="display">Upgrade your training setup</h1>
+      <p class="lead">Tell us where to deliver STIKR. Payment will be connected next — this saves your order details.</p>
+    </div>
+
+    <div class="chk-grid">
+      <form class="chk-form" data-checkout novalidate>
+        <fieldset>
+          <legend class="display">Contact</legend>
+          <label>
+            Full name
+            <input name="name" type="text" required autocomplete="name" placeholder="Your full name" />
+          </label>
+          <div class="row">
+            <label>
+              Email
+              <input name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+            </label>
+            <label>
+              Phone
+              <input name="phone" type="tel" required autocomplete="tel" placeholder="+971 50 000 0000" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="display">Delivery address</legend>
+          <label>
+            Street address
+            <input name="address1" type="text" required autocomplete="address-line1" placeholder="Building, street, villa / apartment" />
+          </label>
+          <label>
+            Apartment, floor, landmark <span class="opt">(optional)</span>
+            <input name="address2" type="text" autocomplete="address-line2" placeholder="Additional details" />
+          </label>
+          <div class="row">
+            <label>
+              City
+              <input name="city" type="text" required autocomplete="address-level2" placeholder="Dubai" />
+            </label>
+            <label>
+              Emirate / region
+              <select name="region" required>
+                <option value="">Select</option>
+                <option>Abu Dhabi</option>
+                <option>Dubai</option>
+                <option>Sharjah</option>
+                <option>Ajman</option>
+                <option>Umm Al Quwain</option>
+                <option>Ras Al Khaimah</option>
+                <option>Fujairah</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              Country
+              <input name="country" type="text" required autocomplete="country-name" value="United Arab Emirates" />
+            </label>
+            <label>
+              Postal code <span class="opt">(optional)</span>
+              <input name="postal" type="text" autocomplete="postal-code" placeholder="00000" />
+            </label>
+          </div>
+          <label>
+            Delivery notes <span class="opt">(optional)</span>
+            <textarea name="notes" rows="3" placeholder="Gate code, preferred time, anything the rider should know"></textarea>
+          </label>
+        </fieldset>
+
+        <button class="btn full" type="submit" data-place-order>Place order</button>
+        <p class="fine">No payment is taken yet. We’ll use this to create the product in your payment API next.</p>
+      </form>
+
+      <aside class="chk-summary">
+        <h2 class="display">Your bag</h2>
+        <div class="product">
+          <img src="/images/product.png" alt="STIKR pouch" />
+          <div>
+            <strong>STIKR magnetic gym pouch</strong>
+            <p>Keeps phone, keys &amp; headphones on the machine.</p>
+          </div>
+        </div>
+
+        <p class="price-note" data-discount-note hidden></p>
+
+        <div class="qty">
+          <span>Quantity</span>
+          <div class="qty-ctrl">
+            <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+            <input data-qty type="number" min="1" max="10" value="1" />
+            <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <dl>
+          <div>
+            <dt>Retail</dt>
+            <dd data-retail>AED 149</dd>
+          </div>
+          <div>
+            <dt>Unit price</dt>
+            <dd class="lime" data-unit>AED 119</dd>
+          </div>
+          <div>
+            <dt>Quantity</dt>
+            <dd data-qty-label>1</dd>
+          </div>
+          <div class="total">
+            <dt>Total</dt>
+            <dd class="display lime" data-total>AED 119</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .chk-header {
+    padding: 16px 0 8px;
+  }
+
+  .chk-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 74px;
+    padding: 0 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+  }
+
+  .logo img {
+    height: 38px;
+    width: auto;
+  }
+
+  .back {
+    color: var(--lime);
+  }
+
+  .chk {
+    padding: 48px 0 96px;
+  }
+
+  .kicker {
+    margin: 0 0 8px;
+    font-size: 18px;
+  }
+
+  .chk h1 {
+    margin: 0 0 12px;
+    font-size: clamp(36px, 5vw, 52px);
+  }
+
+  .lead {
+    max-width: 640px;
+    margin: 0 0 40px;
+    color: var(--muted);
+  }
+
+  .chk-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  fieldset {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin: 0 0 24px;
+  }
+
+  legend {
+    padding: 0 8px;
+    font-size: 20px;
+  }
+
+  label {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .opt {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #1a1a1a;
+    padding: 12px 14px;
+    outline: none;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--lime);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .full {
+    width: 100%;
+  }
+
+  .fine {
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .chk-summary {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    position: sticky;
+    top: 24px;
+  }
+
+  .chk-summary h2 {
+    margin: 0 0 20px;
+    font-size: 28px;
+  }
+
+  .product {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .product img {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+  }
+
+  .product p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .price-note {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--lime);
+    border-radius: var(--radius);
+    background: rgba(210, 246, 84, 0.08);
+    color: var(--lime);
+    font-size: 15px;
+  }
+
+  .price-note[hidden] {
+    display: none;
+  }
+
+  .price-note strong {
+    color: white;
+  }
+
+  .qty {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .qty-ctrl {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--lime);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .qty-ctrl button,
+  .qty-ctrl input {
+    border: 0;
+    background: transparent;
+    color: white;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .qty-ctrl input {
+    width: 52px;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    border-radius: 0;
+    -moz-appearance: textfield;
+  }
+
+  .qty-ctrl input::-webkit-outer-spin-button,
+  .qty-ctrl input::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
+  dl {
+    margin: 20px 0 0;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+
+  dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+
+  .total {
+    border-top: 1px solid var(--line);
+    margin-top: 8px;
+    padding-top: 16px;
+    font-size: 22px;
+  }
+
+  @media (max-width: 900px) {
+    .chk-grid,
+    .row {
+      grid-template-columns: 1fr;
+    }
+
+    .chk-summary {
+      position: static;
+    }
+
+    .chk-bar {
+      min-height: 56px;
+      padding: 0 12px;
+    }
+
+    .logo img {
+      height: 24px;
+    }
+
+    .chk {
+      padding: 28px 0 64px;
+    }
+
+    fieldset {
+      padding: 16px;
+    }
+  }
+</style>
+
+<script>
+  import { applyOfferToPage, loadOffer, RETAIL } from "../scripts/offer.js";
+
+  const offer = loadOffer();
+  applyOfferToPage(offer);
+
+  const qtyInput = document.querySelector("[data-qty]");
+  const unitEl = document.querySelector("[data-unit]");
+  const totalEl = document.querySelector("[data-total]");
+  const qtyLabel = document.querySelector("[data-qty-label]");
+  const retailEl = document.querySelector("[data-retail]");
+  const form = document.querySelector("[data-checkout]");
+
+  if (retailEl) retailEl.textContent = `AED ${RETAIL}`;
+
+  const readQty = () => {
+    const value = Number(qtyInput?.value) || 1;
+    return Math.min(10, Math.max(1, value));
+  };
+
+  const render = () => {
+    const qty = readQty();
+    if (qtyInput) qtyInput.value = String(qty);
+    if (qtyLabel) qtyLabel.textContent = String(qty);
+    if (unitEl) unitEl.textContent = `AED ${offer.unitPrice}`;
+    if (totalEl) totalEl.textContent = `AED ${offer.unitPrice * qty}`;
+  };
+
+  document.querySelector("[data-qty-minus]")?.addEventListener("click", () => {
+    if (qtyInput) qtyInput.value = String(readQty() - 1);
+    render();
+  });
+  document.querySelector("[data-qty-plus]")?.addEventListener("click", () => {
+    if (qtyInput) qtyInput.value = String(readQty() + 1);
+    render();
+  });
+  qtyInput?.addEventListener("input", render);
+  render();
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    const qty = readQty();
+    const order = {
+      id: `STIKR-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      product: "STIKR magnetic gym pouch",
+      quantity: qty,
+      unitPrice: offer.unitPrice,
+      retail: RETAIL,
+      discountPercent: offer.percent,
+      discountSource: offer.source,
+      total: offer.unitPrice * qty,
+      currency: "AED",
+      customer: data,
+      status: "pending_payment",
+    };
+
+    localStorage.setItem("stikr-pending-order", JSON.stringify(order));
+    window.location.href = "/thank-you";
+  });
+</script>

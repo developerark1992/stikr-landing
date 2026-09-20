@@ -1,0 +1,1860 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const benefits = [
+  { img: "/images/benefit-1.png", title: "Cleaner transitions between sets", pos: "tl" },
+  { img: "/images/benefit-2.png", title: "Zero interruptions mid-workout", pos: "tr" },
+  { img: "/images/benefit-3.png", title: "One place for all essentials", pos: "mid" },
+  { img: "/images/benefit-5.png", title: "A setup that moves as fast as you do", pos: "bl" },
+  { img: "/images/benefit-4.png", title: "A workout where you stay dialed", pos: "br" },
+];
+
+const colors = [
+  {
+    id: "stay",
+    num: "01",
+    color: "#efffb7",
+    img: "/images/color-stay.png",
+    short: "Stay",
+    title: "Stay in the zone",
+    copy: "No distractions. No clutter. No stopping mid-set to find anything.",
+  },
+  {
+    id: "move",
+    num: "02",
+    color: "#d2f654",
+    img: "/images/benefit-3.png",
+    short: "Move",
+    title: "Move faster",
+    copy: "Perfect for supersets, drop sets, and circuit training.",
+  },
+  {
+    id: "keep",
+    num: "03",
+    color: "#b8da45",
+    img: "/images/color-move.png",
+    short: "Keep",
+    title: "Keep everything close",
+    copy: "Your essentials follow you — not the other way around.",
+  },
+  {
+    id: "look",
+    num: "04",
+    color: "#93b719",
+    img: "/images/color-keep.png",
+    short: "Look",
+    title: "Look cleaner",
+    copy: "Looks athletic, intentional, disciplined.",
+  },
+  {
+    id: "train",
+    num: "05",
+    color: "#638000",
+    img: "/images/intro-product.png",
+    short: "Train",
+    title: "Train with clarity",
+    copy: "A tidy space = a tidy mind = a stronger workout.",
+  },
+];
+
+const quotes = [
+  {
+    text: "I don’t break rhythm anymore. This pouch keeps everything tight and accessible.",
+    name: "Omar A",
+    avatar: "/images/avatar-omar.png",
+  },
+  {
+    text: "Perfect for supersets. Everything follows me instantly.",
+    name: "Hana M.",
+    avatar: "/images/avatar-hana.png",
+  },
+  {
+    text: "The magnet is no joke. It stays locked even during heavy deadlifts.",
+    name: "Talal R.",
+    avatar: "/images/avatar-talal.png",
+  },
+  {
+    text: "I train better when things are organized. This is now part of my setup.",
+    name: "Raquel L.",
+    avatar: "/images/avatar-raquel.png",
+  },
+];
+
+const costs = [
+  { problem: "Broken focus?", result: "Progress" },
+  { problem: "Lost rhythm?", result: "Performance" },
+  { problem: "Unorganized setup?", result: "Consistency" },
+];
+---
+
+<Layout>
+  <section class="hero" id="top">
+    <div class="hero-media">
+      <img class="hero-still" src="/images/color-stay.png" alt="" />
+      <div class="hero-fade"></div>
+      <div class="pills">
+        <span class="pill p1">Ultra-strong magnetic grip</span>
+        <span class="pill p2">Quick-access athletic design</span>
+        <span class="pill p3">Stays put through any workout</span>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="header-bar">
+        <a class="logo" href="#top" aria-label="STIKR home">
+          <img src="/images/logo.png" alt="STIKR" width="219" height="38" />
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#top">Home</a>
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+        </nav>
+        <a class="btn header-cta" href="/checkout">Buy Now</a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" data-menu-toggle>
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="wrap hero-copy">
+      <h1 class="display lime">
+        Great workouts<br />come from<br />great focus
+      </h1>
+      <p>
+        When you're locked in, every rep matters.
+        <span class="stikr-mark"> STIK<em>R</em> </span>
+        keeps your phone, keys, & headphones exactly where you need them. Now nothing breaks your rhythm, your flow, or your performance.
+      </p>
+      <div class="hero-actions">
+        <a class="btn hero-cta" href="/checkout">Keep me locked-in</a>
+        <div class="price-stack">
+          <p>Retail Price: <span class="lime display price-em">AED 149</span></p>
+          <p>Black Friday Sale: <span class="lime display price-em" data-save-label>save 20% today</span></p>
+          <p><strong>GET NOW:</strong> <span class="lime display price-em" data-now-price>AED 119</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-space" id="about">
+      <div class="wrap problem-head">
+        <h2 class="display">
+          <span class="lime">Tired of mishandling</span> your<br />essentials during workout?
+        </h2>
+        <p>
+          You walk into the gym ready to crush your workout. You warm up, grab a bench — and suddenly you’re dealing with the same annoying problem:
+        </p>
+      </div>
+      <div class="wrap problem-grid">
+        <article>
+          <img src="/images/problem-1.png" alt="Phone, keys, wallet and AirPods on a table" />
+          <h3 class="display lime">Where do you put your stuff?</h3>
+          <ul>
+            <li>Your mobile and keys?</li>
+            <li>Your wallet?</li>
+            <li>Your AirPods case?</li>
+          </ul>
+        </article>
+        <article>
+          <img src="/images/problem-2.png" alt="Phone left on the gym floor next to dumbbells" />
+          <h3 class="display lime">You try</h3>
+          <ul>
+            <li>Balancing your phone on the bench.</li>
+            <li>Putting it on the floor.</li>
+            <li>Holding everything in your pockets.</li>
+          </ul>
+        </article>
+        <article>
+          <img src="/images/problem-3.png" alt="Athlete sitting in a locker room" />
+          <h3 class="display lime">And lockers?</h3>
+          <p>Sure — if you enjoy walking back and forth between every set.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-space intro">
+      <div class="wrap intro-grid">
+        <div>
+          <img class="wordmark" src="/images/logo.png" alt="STIKR" width="219" height="38" />
+          <p class="intro-lead">
+            Keeps your essentials off the floor, out of your pockets, and always within reach — so your flow stays untouched.
+          </p>
+        </div>
+        <img class="intro-photo" src="/images/intro-product.png" alt="STIKR holding a bottle and phone on gym equipment" />
+      </div>
+    </section>
+
+    <section class="section-space">
+      <div class="wrap">
+        <h2 class="display">
+          Let’s be real —<br />this is <span class="lime">what you want</span>
+        </h2>
+        <div class="benefits-stage">
+          <img class="dash a6-top" src="/images/arrow-6.png" alt="" />
+          <img class="dash a6-bot" src="/images/arrow-6.png" alt="" />
+          <img class="dash a7" src="/images/arrow-7.png" alt="" />
+          <img class="dash a8" src="/images/arrow-8.png" alt="" />
+          {benefits.map((item) => (
+            <article class={`benefit-card ${item.pos}`}>
+              <img src={item.img} alt="" />
+              <p>{item.title}</p>
+            </article>
+          ))}
+        </div>
+        <div class="benefit-foot">
+          <p>
+            If that sounds right…
+            <span class="stikr-mark">STIK<em>R</em></span>
+            {" "}is already a must-have for you.
+          </p>
+          <a class="btn" href="#pricing">Equip me like an athlete</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features" data-features>
+      <div class="features-bg" style="background-image: url('/images/features-bg.png')"></div>
+      <div class="feature-stage">
+        <h2 class="display">
+          Designed to move with you.<br />
+          <span class="lime">Built for athletes</span> who don’t slow down.
+        </h2>
+
+        <img class="feature-product" src="/images/product.png" alt="STIKR pouch with water bottle" />
+
+        <svg class="leader l1" width="290" height="55" viewBox="0 0 290 55" fill="none" aria-hidden="true">
+          <path d="M290 54.5H55.5L5.5 5.5" pathLength="1" />
+          <circle cx="5" cy="5" r="5" fill="#D2F654" />
+          <circle cx="5" cy="5" r="3" fill="#111111" />
+        </svg>
+        <svg class="leader l2" width="290" height="54.5" viewBox="0 0 290 54.5" fill="none" aria-hidden="true">
+          <path d="M290 0.5H55.5L5.5 49.5" pathLength="1" />
+          <circle cx="5" cy="49.5" r="5" fill="#D2F654" />
+          <circle cx="5" cy="49.5" r="3" fill="#111111" />
+        </svg>
+        <svg class="leader l3" width="124.938" height="119.241" viewBox="0 0 124.938 119.241" fill="none" aria-hidden="true">
+          <path d="M124.5 0.24L75 90.241L7 113.741" pathLength="1" />
+          <circle cx="5" cy="114.241" r="5" fill="#D2F654" />
+          <circle cx="5" cy="114.241" r="3" fill="#111111" />
+        </svg>
+        <svg class="leader l4" width="124.938" height="119.241" viewBox="0 0 124.938 119.241" fill="none" aria-hidden="true">
+          <path d="M124.5 0.24L75 90.241L7 113.741" pathLength="1" />
+          <circle cx="5" cy="114.241" r="5" fill="#D2F654" />
+          <circle cx="5" cy="114.241" r="3" fill="#111111" />
+        </svg>
+        <svg class="leader l5" width="290" height="54.5" viewBox="0 0 290 54.5" fill="none" aria-hidden="true">
+          <path d="M290 0.5H55.5L5.5 49.5" pathLength="1" />
+          <circle cx="5" cy="49.5" r="5" fill="#D2F654" />
+          <circle cx="5" cy="49.5" r="3" fill="#111111" />
+        </svg>
+        <svg class="leader l6" width="290" height="54.5" viewBox="0 0 290 54.5" fill="none" aria-hidden="true">
+          <path d="M290 0.5H55.5L5.5 49.5" pathLength="1" />
+          <circle cx="5" cy="49.5" r="5" fill="#D2F654" />
+          <circle cx="5" cy="49.5" r="3" fill="#111111" />
+        </svg>
+
+        <div class="callout c-magnet">
+          <h3>Ultra-strong neodymium magnet</h3>
+          <p>Locks onto racks, machines, dumbbell stands — stays put through heavy reps and fast transitions.</p>
+        </div>
+        <div class="callout c-slip">
+          <h3>Anti-slip athletic backing</h3>
+          <p>Sweat? Movement? Impact?<br />It doesn’t budge.</p>
+        </div>
+        <div class="callout c-light">
+          <h3>Lightweight, minimal, athletic build</h3>
+          <p>Carry less. Move better.<br />Matches every training style.</p>
+        </div>
+        <div class="callout c-sweat">
+          <h3>Sweat-proof external material</h3>
+          <p>Built for real gym conditions — not<br />gentle handling.</p>
+        </div>
+        <div class="callout c-quick">
+          <h3>Quick-access layout</h3>
+          <p>Phone, AirPods, keys — grab, drop, go.<br />Zero messing around.</p>
+        </div>
+        <div class="callout c-shock">
+          <h3>Shock-resistant interior</h3>
+          <p>Protects your phone through the intensity<br />of your workout.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space colors">
+      <div class="wrap">
+        <h2 class="display">
+          Small accessory.<br />Big upgrade to your <span class="lime">training</span>
+        </h2>
+      </div>
+      <div class="color-row" data-color-row>
+        {colors.map((item, index) => (
+          <button
+            class:list={["color-col", { "is-open": index === 4 }]}
+            type="button"
+            style={`--swatch:${item.color}`}
+            data-color
+            aria-pressed={index === 4 ? "true" : "false"}
+          >
+            <span class="color-fill"></span>
+            <img src={item.img} alt="" />
+            <span class="color-shade"></span>
+            <span class="color-num display">{item.num}</span>
+            <strong class="display color-short">{item.short}</strong>
+            <strong class="display color-title">{item.title}</strong>
+            <span class="color-copy-line">{item.copy}</span>
+          </button>
+        ))}
+      </div>
+      <div class="wrap color-copy">
+        <div>
+          <p>
+            Imagine a workout where every machine is ready, your essentials stay aligned with your flow, and nothing breaks your momentum.
+          </p>
+          <p class="display give">
+            That’s what STIK<span class="lime">R</span> gives you.
+          </p>
+        </div>
+        <form class="signup" data-signup>
+          <label for="email">Sign Up for a 20% additional discount now!</label>
+          <div class="signup-row">
+            <input id="email" name="email" type="email" required placeholder="Enter your email" />
+            <button class="btn" type="submit">Sign up</button>
+          </div>
+          <p class="signup-msg" hidden>You’re in. We’ll send the 20% code.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section-space quotes">
+      <div class="wrap quotes-head">
+        <h2 class="display">
+          <span class="lime">Athletes</span> love the<br />difference it makes
+        </h2>
+        <a class="btn" href="#pricing">Join the Athletes Who Train Smarter</a>
+      </div>
+      <div class="wrap quotes-layout">
+        <img class="quotes-photo" src="/images/testimonial-photo.png" alt="Athlete training with a flashlight-style beam overlay" />
+        <div class="quote-track-wrap">
+          <div class="quote-viewport" data-quote-view>
+            <div class="quote-track" data-quotes>
+              {quotes.map((quote) => (
+                <article class="quote-card">
+                  <img class="quote-mark" src="/images/quote.svg" alt="" width="80" height="52" />
+                  <p>{quote.text}</p>
+                  <footer>
+                    <span>- {quote.name}</span>
+                    <img src={quote.avatar} alt="" width="56" height="56" />
+                  </footer>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div class="quote-nav">
+            <button type="button" data-quote-prev aria-label="Previous testimonial">
+              <img src="/images/carousel-prev.svg" alt="" />
+            </button>
+            <div class="quote-dots" data-quote-dots>
+              {quotes.map((_, i) => (
+                <button type="button" class:list={[{ active: i === 0 }]} aria-label={`Go to quote ${i + 1}`} data-quote-dot={i}></button>
+              ))}
+            </div>
+            <button type="button" data-quote-next aria-label="Next testimonial">
+              <img src="/images/carousel-next.svg" alt="" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space pricing" id="pricing">
+      <div class="wrap">
+        <h2 class="display">
+          Level up your performance for less than the <span class="lime">price of a new gym shirt</span>
+        </h2>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div class="price-row">
+              <span class="strike">Retail price AED 149</span>
+              <span class="sale">Black Friday Sale <strong class="lime" data-now-price>AED 119</strong></span>
+            </div>
+            <ul>
+              {costs.map((row) => (
+                <li>
+                  <span>
+                    <img src="/images/check.svg" alt="" width="18" height="18" />
+                    {row.problem}
+                  </span>
+                  <span class="cost-label">Costs</span>
+                  <strong class="display lime">{row.result}</strong>
+                </li>
+              ))}
+            </ul>
+            <div class="price-foot">
+              <span>A permanent upgrade to your training flow.</span>
+              <strong class="display lime" data-now-price>AED 119</strong>
+            </div>
+            <p class="price-note" data-discount-note hidden></p>
+            <a class="btn full" href="/checkout">Upgrade My Training Setup</a>
+          </div>
+          <img src="/images/product.png" alt="STIKR product" />
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="cta">
+      <div class="wrap cta-card">
+        <div>
+          <h2 class="display">
+            Train clean.<br />Train focused.<br />Train like an athlete.
+          </h2>
+          <p>Your essentials stay where you train — so your mind stays on the rep, not the clutter.</p>
+          <a class="cta-button" href="/checkout">
+            <span class="timer" data-timer>00:59</span>
+            I’m ready to train distraction-free
+          </a>
+        </div>
+        <img src="/images/product.png" alt="" />
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-top">
+      <div>
+        <img src="/images/logo.png" alt="STIKR" width="219" height="38" />
+        <p>Your essentials stay where you train — so your mind stays on the rep, not the clutter.</p>
+      </div>
+      <nav>
+        <a href="#top">home</a>
+        <a href="#about">about</a>
+        <a href="#features">features</a>
+        <a href="#pricing">pricing</a>
+      </nav>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>All rights reserved by <span class="stikr-mark">STIK<em>R</em></span></p>
+      <p><a href="#">Privacy policy</a> <span>|</span> <a href="#">Terms & Conditions</a></p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 56.388vw;
+    min-height: 640px;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .site-header {
+    position: absolute;
+    top: 1.11vw;
+    left: 0;
+    right: 0;
+    z-index: 6;
+  }
+
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: var(--wrap);
+    height: 74px;
+    margin: 0 auto;
+    padding: 0 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .header-cta {
+    border-radius: 8px !important;
+    min-width: 140px;
+    height: 48px;
+  }
+
+  .logo {
+    width: 219px;
+    height: 38px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .logo img {
+    height: 38px;
+    width: auto;
+    max-width: none;
+  }
+
+  .nav {
+    display: flex;
+    gap: 32px;
+    font-size: 18px;
+  }
+
+  .menu-toggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: white;
+  }
+
+  .menu-toggle span {
+    display: block;
+    height: 2px;
+    margin: 6px 0;
+    background: white;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    padding-top: 13.96vw;
+    max-width: 54.17%;
+    margin-left: var(--gutter);
+  }
+
+  .hero h1 {
+    font-size: 66px;
+    line-height: 66px;
+    margin: 0 0 40px;
+  }
+
+  .hero-copy p {
+    max-width: 780px;
+    margin: 0 0 36px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .hero-cta {
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  .price-stack {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .price-stack p {
+    margin: 0;
+  }
+
+  .price-em {
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+
+  .hero-media {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 52.5%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .hero-still {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: hero-pan 14s ease-in-out infinite;
+    transform-origin: 30% 60%;
+  }
+
+  @keyframes hero-pan {
+    0% { transform: scale(1.04) translate(0, 0); }
+    50% { transform: scale(1.14) translate(-3%, -2%); }
+    100% { transform: scale(1.04) translate(0, 0); }
+  }
+
+  .hero-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #111 0%, rgba(17, 17, 17, 0) 100%);
+  }
+
+  .pills {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .pill {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 48px;
+    border: 1px solid var(--lime);
+    color: var(--lime);
+    border-radius: 50px;
+    font-size: 18px;
+    line-height: 28px;
+    white-space: nowrap;
+    background: transparent;
+  }
+
+  .p1 { left: 0.66%; top: 84.73%; transform: rotate(-8.35deg); }
+  .p2 { left: 34.26%; top: 89.53%; transform: rotate(7.11deg); }
+  .p3 { left: 58.73%; top: 82.14%; transform: rotate(-9.29deg); }
+
+  .problem-head,
+  .quotes-head,
+  .benefit-foot,
+  .color-copy,
+  .pricing-grid,
+  .intro-grid,
+  .footer-top,
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  .problem-head h2,
+  .quotes-head h2,
+  .pricing h2,
+  .colors h2 {
+    font-size: 40px;
+    line-height: 44px;
+    margin: 0 0 24px;
+  }
+
+  .problem-head p,
+  .benefit-foot p {
+    max-width: 420px;
+    margin: 0;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .problem-grid img,
+  .intro-photo,
+  .quotes-photo {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .problem-grid img {
+    height: 200px;
+  }
+
+  .problem-grid h3,
+  .problem-grid p,
+  .problem-grid ul {
+    margin: 12px 0 0;
+    font-size: 18px;
+  }
+
+  .problem-grid ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .problem-grid li::before {
+    content: "- ";
+    color: var(--lime);
+  }
+
+  .intro-grid {
+    align-items: center;
+  }
+
+  .intro-lead {
+    font-size: 32px;
+    line-height: 42px;
+    max-width: 650px;
+  }
+
+  .intro-photo {
+    width: 580px;
+    max-width: 100%;
+    height: 400px;
+  }
+
+  .wordmark {
+    height: 38px;
+    width: auto;
+    margin-bottom: 24px;
+  }
+
+  .benefits-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1280 / 870;
+    margin-top: 24px;
+  }
+
+  .benefit-card {
+    position: absolute;
+    width: 37.5%;
+    height: 28.74%;
+    background: var(--card);
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .benefit-card.tl { left: 0; top: 0; }
+  .benefit-card.tr { left: 53.13%; top: 0; }
+  .benefit-card.mid { left: 34.92%; top: 35.63%; }
+  .benefit-card.bl { left: 9.38%; top: 71.26%; }
+  .benefit-card.br { left: 62.5%; top: 71.26%; }
+
+  .benefit-card img {
+    width: calc(100% - 20px);
+    height: 72%;
+    margin: 10px 10px 0;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  .benefit-card p {
+    margin: 0;
+    padding: 10px 16px 0;
+    text-align: center;
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .dash {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    filter: invert(89%) sepia(47%) saturate(600%) hue-rotate(18deg) brightness(103%);
+    opacity: 0.85;
+  }
+
+  .a6-top {
+    top: 14.37%;
+    left: 38.28%;
+    width: 14.06%;
+    height: auto;
+  }
+
+  .a6-bot {
+    top: 85.63%;
+    left: 47.66%;
+    width: 14.06%;
+    height: auto;
+  }
+
+  .a7 {
+    top: 14.37%;
+    left: 73.2%;
+    width: 26.8%;
+    height: 35.74%;
+  }
+
+  .a8 {
+    top: 50.11%;
+    left: 0;
+    width: 34.14%;
+    height: 35.52%;
+    transform: scaleX(-1);
+  }
+
+  .benefit-foot {
+    margin-top: 40px;
+    align-items: center;
+  }
+
+  .benefit-foot p {
+    font-size: 32px;
+    line-height: 42px;
+    max-width: 560px;
+  }
+
+  .features {
+    position: relative;
+    width: 100%;
+    height: 57.292vw;
+    overflow: hidden;
+  }
+
+  .features-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .features-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 17, 0.88);
+  }
+
+  .feature-stage {
+    position: relative;
+    width: 1440px;
+    height: 825px;
+    left: 50%;
+    margin-left: -720px;
+    transform: scale(calc(100vw / 1440));
+    transform-origin: top center;
+  }
+
+  .feature-stage h2 {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 40px;
+    line-height: 44px;
+    margin: 0;
+  }
+
+  .feature-product {
+    position: absolute;
+    left: 573px;
+    top: 178px;
+    width: 354px;
+    height: 446px;
+    object-fit: contain;
+    max-width: none;
+  }
+
+  .leader {
+    position: absolute;
+    overflow: visible;
+    z-index: 2;
+  }
+
+  .leader path {
+    stroke: #d2f654;
+    fill: none;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.85s cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  .leader circle {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.7s;
+  }
+
+  .features.is-on .leader path {
+    stroke-dashoffset: 0;
+  }
+
+  .features.is-on .leader circle {
+    opacity: 1;
+  }
+
+  .l1 { left: 291px; top: 332px; }
+  .l2 { left: 291px; top: 426px; }
+  .l3 { left: 595px; top: 568px; }
+  .l4 { left: 751px; top: 568px; transform: scaleX(-1); }
+  .l5 { left: 848px; top: 332px; transform: rotate(180deg); }
+  .l6 { left: 848px; top: 426px; transform: scaleY(-1) rotate(180deg); }
+
+  .l1 path { transition-delay: 0.05s; }
+  .l5 path { transition-delay: 0.12s; }
+  .l2 path { transition-delay: 0.2s; }
+  .l6 path { transition-delay: 0.28s; }
+  .l3 path { transition-delay: 0.36s; }
+  .l4 path { transition-delay: 0.44s; }
+
+  .callout {
+    position: absolute;
+    color: white;
+    z-index: 3;
+  }
+
+  .callout h3 {
+    margin: 0 0 12px;
+    font-family: var(--body);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .callout p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .c-magnet { top: 234px; left: 110px; width: 400px; text-align: right; }
+  .c-slip { top: 480px; left: 110px; width: 350px; text-align: right; }
+  .c-light { top: 234px; left: 934px; width: 390px; }
+  .c-sweat { top: 480px; left: 964px; width: 360px; }
+  .c-quick { top: 687px; left: 275px; width: 400px; text-align: right; }
+  .c-shock { top: 687px; left: 795px; width: 380px; }
+
+  .color-row {
+    display: flex;
+    height: 650px;
+    margin: 32px 0 48px;
+    overflow: hidden;
+  }
+
+  .color-col {
+    position: relative;
+    flex: 15.83 1 0;
+    min-width: 0;
+    height: 650px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    color: #111;
+    transition: flex 400ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  .color-col.is-open {
+    flex: 36.67 1 0;
+    color: white;
+  }
+
+  .color-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--swatch);
+    transition: opacity 400ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  .color-col img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 400ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  .color-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, #111 100%);
+    opacity: 0;
+    transition: opacity 400ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+
+  .color-col.is-open .color-fill {
+    opacity: 0;
+  }
+
+  .color-col.is-open img {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .color-col.is-open .color-shade {
+    opacity: 1;
+  }
+
+  .color-num {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 26px;
+    line-height: 30px;
+    z-index: 2;
+    transition: color 400ms;
+  }
+
+  .color-short,
+  .color-title {
+    position: absolute;
+    z-index: 2;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .color-short {
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    font-size: 36px;
+    line-height: 36px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 200ms linear;
+  }
+
+  .color-title {
+    left: 24px;
+    bottom: 92px;
+    font-size: 38px;
+    line-height: 38px;
+    text-align: left;
+    opacity: 0;
+    transition: opacity 280ms 80ms;
+  }
+
+  .color-copy-line {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 20px;
+    z-index: 2;
+    font-size: 22px;
+    line-height: 32px;
+    color: white;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 400ms 80ms, transform 400ms 80ms;
+  }
+
+  .color-col.is-open .color-short {
+    opacity: 0;
+  }
+
+  .color-col.is-open .color-title {
+    opacity: 1;
+  }
+
+  .color-col.is-open .color-copy-line {
+    opacity: 1;
+    transform: none;
+  }
+
+  .color-copy {
+    align-items: flex-end;
+  }
+
+  .color-copy p {
+    max-width: 650px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+  }
+
+  .give {
+    font-size: 36px;
+    line-height: 36px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  .signup label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  .signup-row {
+    display: flex;
+    gap: 8px;
+    width: min(550px, 100%);
+    border: 1px solid var(--lime);
+    border-radius: var(--radius);
+    padding: 8px;
+    background: var(--bg);
+  }
+
+  .signup input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: white;
+    padding: 8px 12px;
+    outline: none;
+  }
+
+  .quotes-layout {
+    position: relative;
+    min-height: 520px;
+    margin-top: 32px;
+  }
+
+  .quotes-photo {
+    width: 42.5%;
+    height: auto;
+    aspect-ratio: 544 / 400;
+    object-fit: cover;
+    border-radius: 0;
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-track-wrap {
+    position: absolute;
+    left: 31.64%;
+    top: 0;
+    width: 74.61%;
+    z-index: 2;
+  }
+
+  .quote-viewport {
+    width: 100%;
+    height: 460px;
+    overflow: hidden;
+  }
+
+  .quote-track {
+    display: flex;
+    gap: 16px;
+    padding: 30px 0 30px 38px;
+    transition: transform 450ms cubic-bezier(0.42, 0, 0.58, 1);
+    will-change: transform;
+  }
+
+  .quote-card {
+    flex: 0 0 420px;
+    height: 400px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: 0 0 4px rgba(210, 246, 84, 0.3);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quote-card:first-child {
+    box-shadow: 0 0 32px rgba(210, 246, 84, 0.3);
+  }
+
+  .quote-card p {
+    font-size: 26px;
+    line-height: 36px;
+    margin: 24px 0 auto;
+  }
+
+  .quote-card footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .quote-card footer img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .quote-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .quote-nav button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .quote-dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .quote-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    padding: 0;
+  }
+
+  .quote-dots button.active {
+    background: var(--lime);
+  }
+
+  .pricing-grid {
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .price-card {
+    width: min(600px, 100%);
+  }
+
+  .price-row,
+  .price-foot,
+  .price-card li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .price-card ul {
+    list-style: none;
+    padding: 16px 0;
+    margin: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .price-card li {
+    padding: 12px 0;
+  }
+
+  .price-card li span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cost-label {
+    font-size: 14px;
+  }
+
+  .strike {
+    text-decoration: line-through;
+  }
+
+  .full {
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .price-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border: 1px solid var(--lime);
+    border-radius: var(--radius);
+    background: rgba(210, 246, 84, 0.08);
+    color: var(--lime);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .price-note[hidden] {
+    display: none;
+  }
+
+  .price-note strong {
+    color: white;
+  }
+
+  .pricing-grid > img {
+    width: 320px;
+  }
+
+  .final-cta {
+    padding: 0 0 80px;
+  }
+
+  .cta-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 374px;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(106deg, #d2f654 4%, #9abd1f 109%);
+    color: var(--bg);
+    overflow: hidden;
+  }
+
+  .cta-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/images/cta-texture.png") center / cover;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .cta-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-card h2 {
+    font-size: 40px;
+    margin: 0 0 20px;
+  }
+
+  .cta-card img {
+    width: 220px;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    background: white;
+    color: var(--bg);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+  }
+
+  .timer {
+    color: #ff0000;
+    font-weight: 700;
+    font-size: 32px;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 0 24px;
+  }
+
+  .footer-top img {
+    height: 38px;
+    width: auto;
+    margin-bottom: 16px;
+  }
+
+  .footer-top nav,
+  .footer-bottom {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .footer-bottom {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 16px;
+  }
+
+  @media (max-width: 1280px) {
+    .benefits-stage {
+      height: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .benefit-card,
+    .benefit-card.tl,
+    .benefit-card.tr,
+    .benefit-card.mid,
+    .benefit-card.bl,
+    .benefit-card.br {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 100%;
+      height: auto;
+    }
+
+    .dash {
+      display: none;
+    }
+
+    .hero-copy {
+      margin-left: 20px;
+      padding-top: 120px;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      line-height: 48px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .site-header {
+      top: 10px;
+    }
+
+    .header-bar {
+      height: 56px;
+      padding: 0 12px;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 140px;
+      height: 24px;
+    }
+
+    .logo img {
+      height: 24px;
+    }
+
+    .nav,
+    .header-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    .header-bar.is-open {
+      height: auto;
+      flex-wrap: wrap;
+      padding: 12px;
+    }
+
+    .header-bar.is-open .nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: 14px;
+      padding: 8px 0 4px;
+      font-size: 16px;
+    }
+
+    .header-bar.is-open .header-cta {
+      display: flex;
+      width: 100%;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 0;
+    }
+
+    .hero-media {
+      position: relative;
+      width: 100%;
+      height: min(58vh, 460px);
+      min-height: 280px;
+      order: 1;
+    }
+
+    .hero-fade {
+      background: linear-gradient(180deg, transparent 42%, #111 100%);
+    }
+
+    .pills {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 16px 16px 20px;
+    }
+
+    .pill {
+      position: relative;
+      left: auto;
+      top: auto;
+      right: auto;
+      width: auto;
+      max-width: 92%;
+      height: 34px;
+      padding: 0 14px;
+      font-size: 13px;
+      line-height: 18px;
+    }
+
+    .p1 { transform: rotate(-6deg); }
+    .p2 { transform: rotate(5deg); margin-left: 18px; }
+    .p3 { transform: rotate(-7deg); }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      order: 2;
+      max-width: 100%;
+      width: var(--wrap);
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 10vw, 46px);
+      line-height: 1.05;
+    }
+
+    .hero-copy p {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-cta {
+      width: 100%;
+    }
+
+    .intro-grid,
+    .quotes-head,
+    .quotes-layout,
+    .pricing-grid,
+    .color-copy,
+    .problem-head,
+    .benefit-foot,
+    .cta-card,
+    .footer-top,
+    .footer-bottom,
+    .problem-grid,
+    .benefits-stage {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-width: 0;
+    }
+
+    .quotes-photo,
+    .intro-photo,
+    .problem-grid img,
+    .pricing-grid > img,
+    .quote-track-wrap,
+    .quote-viewport {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .problem-head h2,
+    .quotes-head h2,
+    .pricing h2,
+    .colors h2,
+    .feature-stage h2,
+    .cta-card h2 {
+      font-size: clamp(28px, 8vw, 36px);
+      line-height: 1.1;
+    }
+
+    .intro-lead,
+    .benefit-foot p {
+      font-size: 22px;
+      line-height: 30px;
+    }
+
+    .intro-photo {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 580 / 400;
+    }
+
+    .quotes-photo {
+      flex: none;
+      width: 100%;
+      margin-top: 0;
+      min-width: 0;
+    }
+
+    .quote-track-wrap {
+      position: relative;
+      left: auto;
+      width: 100%;
+    }
+
+    .quote-viewport {
+      width: 100%;
+      height: auto;
+    }
+
+    .quote-track {
+      padding: 12px 0;
+      width: 100%;
+    }
+
+    .quote-card {
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 280px;
+    }
+
+    .quote-card p {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .color-row {
+      width: 100%;
+      max-width: 100%;
+      height: 420px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .color-col,
+    .color-col.is-open {
+      flex: 0 0 82%;
+      height: 420px;
+      scroll-snap-align: start;
+    }
+
+    .color-title,
+    .color-short {
+      font-size: 28px;
+      line-height: 30px;
+    }
+
+    .color-copy-line {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .signup-row {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .leaders,
+    .leader {
+      display: none;
+    }
+
+    .callout,
+    .c-magnet,
+    .c-slip,
+    .c-light,
+    .c-sweat,
+    .c-quick,
+    .c-shock {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: auto;
+      text-align: left;
+      padding: 16px 20px;
+    }
+
+    .callout h3 {
+      white-space: normal;
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    .features {
+      height: auto;
+      overflow: hidden;
+    }
+
+    .feature-stage {
+      height: auto;
+      transform: none;
+      width: 100%;
+      left: auto;
+      margin-left: 0;
+    }
+
+    .feature-product {
+      position: relative;
+      left: auto;
+      top: auto;
+      display: block;
+      width: min(280px, 72%);
+      height: auto;
+      margin: 24px auto;
+    }
+
+    .feature-stage h2 {
+      position: relative;
+      top: auto;
+      padding: 40px 20px 0;
+    }
+
+    .pricing-grid > img {
+      width: min(240px, 70%);
+      margin: 0 auto;
+    }
+
+    .cta-card {
+      min-height: 0;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .cta-card img {
+      width: 140px;
+      margin: 16px auto 0;
+    }
+
+    .cta-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .footer-top nav,
+    .footer-bottom {
+      flex-wrap: wrap;
+    }
+
+    .price-row,
+    .price-foot,
+    .price-card li {
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .p3 {
+      display: none;
+    }
+
+    .hero-media {
+      height: 62vw;
+      min-height: 280px;
+      max-height: 420px;
+    }
+
+    .benefits-stage {
+      aspect-ratio: auto;
+    }
+
+    .benefit-card p {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .color-row,
+    .color-col,
+    .color-col.is-open {
+      height: 360px;
+    }
+
+    .color-col,
+    .color-col.is-open {
+      flex-basis: 88%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-still,
+    .color-col,
+    .color-col img,
+    .quote-track,
+    .leader path {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector(".header-bar");
+  document.querySelector("[data-menu-toggle]")?.addEventListener("click", () => {
+    header?.classList.toggle("is-open");
+  });
+  header?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => header.classList.remove("is-open"));
+  });
+
+  const colorButtons = [...document.querySelectorAll("[data-color]")];
+  colorButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      colorButtons.forEach((item) => {
+        const on = item === button;
+        item.classList.toggle("is-open", on);
+        item.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    });
+  });
+
+  const form = document.querySelector("[data-signup]");
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = form.querySelector(".signup-msg");
+    if (message) message.hidden = false;
+    form.reset();
+  });
+
+  const features = document.querySelector("[data-features]");
+  if (features && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            features.classList.add("is-on");
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.28 },
+    );
+    io.observe(features);
+  } else {
+    features?.classList.add("is-on");
+  }
+
+  const track = document.querySelector("[data-quotes]");
+  const viewport = document.querySelector("[data-quote-view]");
+  const dots = [...document.querySelectorAll("[data-quote-dot]")];
+  let quoteIndex = 0;
+  let timerId = 0;
+
+  const quoteStep = () => {
+    const card = track?.querySelector(".quote-card");
+    if (!card) return 436;
+    const styles = window.getComputedStyle(track);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap) || 16;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const goTo = (index) => {
+    if (!track || !viewport) return;
+    quoteIndex = (index + dots.length) % dots.length;
+    const maxX = Math.max(0, track.scrollWidth - viewport.clientWidth);
+    const x = Math.min(quoteIndex * quoteStep(), maxX);
+    track.style.transform = `translateX(${-x}px)`;
+    dots.forEach((dot, i) => dot.classList.toggle("active", i === quoteIndex));
+  };
+
+  const play = () => {
+    window.clearInterval(timerId);
+    timerId = window.setInterval(() => goTo(quoteIndex + 1), 4000);
+  };
+
+  document.querySelector("[data-quote-next]")?.addEventListener("click", () => {
+    goTo(quoteIndex + 1);
+    play();
+  });
+  document.querySelector("[data-quote-prev]")?.addEventListener("click", () => {
+    goTo(quoteIndex - 1);
+    play();
+  });
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      goTo(Number(dot.getAttribute("data-quote-dot")));
+      play();
+    });
+  });
+  play();
+  window.addEventListener("resize", () => goTo(quoteIndex));
+
+  const timer = document.querySelector("[data-timer]");
+  let remaining = 59;
+  setInterval(() => {
+    remaining = remaining <= 0 ? 59 : remaining - 1;
+    if (timer) timer.textContent = `00:${String(remaining).padStart(2, "0")}`;
+  }, 1000);
+</script>

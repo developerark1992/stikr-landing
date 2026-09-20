@@ -1,0 +1,381 @@
+---
+const prizes = [
+  { label: "5% off", lines: ["5% off"], type: "percent", value: 5 },
+  { label: "0% off", lines: ["0% off"], type: "percent", value: 0 },
+  { label: "50% off", lines: ["50% off"], type: "percent", value: 50 },
+  { label: "0% off", lines: ["0% off"], type: "percent", value: 0 },
+  { label: "1 more chance", lines: ["1 more", "chance"], type: "again", value: 0 },
+  { label: "0% off", lines: ["0% off"], type: "percent", value: 0 },
+  { label: "See you next time", lines: ["See you", "next time"], type: "lose", value: 0 },
+  { label: "20% off", lines: ["20% off"], type: "percent", value: 20 },
+];
+
+const cx = 200;
+const cy = 200;
+const pieR = 168;
+const n = prizes.length;
+const slice = (2 * Math.PI) / n;
+
+function polar(angle: number, radius: number) {
+  return {
+    x: cx + Math.cos(angle) * radius,
+    y: cy + Math.sin(angle) * radius,
+  };
+}
+
+function slicePath(index: number) {
+  const start = index * slice - Math.PI / 2;
+  const end = start + slice;
+  const a = polar(start, pieR);
+  const b = polar(end, pieR);
+  return `M ${cx} ${cy} L ${a.x.toFixed(2)} ${a.y.toFixed(2)} A ${pieR} ${pieR} 0 0 1 ${b.x.toFixed(2)} ${b.y.toFixed(2)} Z`;
+}
+
+const slices = prizes.map((prize, index) => {
+  const mid = index * slice + slice / 2 - Math.PI / 2;
+  const text = polar(mid, 102);
+  const deg = (index * 360) / n + 360 / n / 2;
+  return { prize, index, d: slicePath(index), text, deg, fill: index % 2 === 0 ? "#e7ff62" : "#c4e63a" };
+});
+
+const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.PI / 2, 182));
+---
+
+<div class="spin-overlay" data-spin-overlay hidden>
+  <div class="spin-modal" role="dialog" aria-modal="true" aria-labelledby="spin-title">
+    <button class="spin-close" type="button" data-spin-close aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <circle cx="9" cy="9" r="8.5" stroke="white"></circle>
+        <path d="M6 6l6 6M12 6l-6 6" stroke="white" stroke-width="1.4"></path>
+      </svg>
+    </button>
+    <h2 id="spin-title" class="display lime">You get a free spin</h2>
+    <div class="spin-stage">
+      <div class="spin-pointer" aria-hidden="true"></div>
+      <div class="spin-wheel" data-spin-wheel>
+        <svg viewBox="0 0 400 400" width="400" height="400">
+          <circle cx="200" cy="200" r="198" fill="#1a1a1a"></circle>
+          {slices.map((slice) => (
+            <path d={slice.d} fill={slice.fill}></path>
+          ))}
+          {dots.map((dot) => (
+            <circle cx={dot.x.toFixed(2)} cy={dot.y.toFixed(2)} r="7" fill="white"></circle>
+          ))}
+          {slices.map((slice) => (
+            <text
+              x={slice.text.x.toFixed(2)}
+              y={slice.text.y.toFixed(2)}
+              fill="#111"
+              font-size={slice.prize.lines.length > 1 ? "15" : "18"}
+              font-weight="700"
+              font-family="Instrument Sans, sans-serif"
+              text-anchor="middle"
+              dominant-baseline="middle"
+              transform={`rotate(${slice.deg} ${slice.text.x.toFixed(2)} ${slice.text.y.toFixed(2)})`}
+            >
+              {slice.prize.lines.map((line, lineIndex) => (
+                <tspan
+                  x={slice.text.x.toFixed(2)}
+                  dy={slice.prize.lines.length > 1 ? (lineIndex === 0 ? "-0.55em" : "1.15em") : "0"}
+                >
+                  {line}
+                </tspan>
+              ))}
+            </text>
+          ))}
+          <circle cx="200" cy="200" r="28" fill="#111" stroke="#d2f654" stroke-width="8"></circle>
+        </svg>
+      </div>
+    </div>
+    <p class="spin-result" data-spin-result hidden></p>
+    <button class="btn spin-cta" type="button" data-spin-go>Spin your luck</button>
+  </div>
+</div>
+
+<style>
+  .spin-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+  }
+
+  .spin-overlay[hidden] {
+    display: none;
+  }
+
+  .spin-modal {
+    position: relative;
+    width: min(720px, 100%);
+    text-align: center;
+  }
+
+  .spin-close {
+    position: absolute;
+    top: -8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+
+  .spin-modal h2 {
+    margin: 0 0 20px;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+  }
+
+  .spin-stage {
+    position: relative;
+    width: min(420px, 78vw);
+    margin: 0 auto 20px;
+    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+  }
+
+  .spin-wheel {
+    width: 100%;
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  .spin-wheel svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .spin-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    z-index: 2;
+    width: 34px;
+    height: 46px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+  }
+
+  .spin-pointer::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lime);
+    transform: translateX(-50%);
+  }
+
+  .spin-pointer::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 26px solid var(--lime);
+    transform: translateX(-50%);
+  }
+
+  .spin-result {
+    min-height: 28px;
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lime);
+  }
+
+  .spin-cta {
+    min-width: 280px;
+    height: 52px;
+    font-size: 16px;
+  }
+
+  .spin-cta:disabled {
+    cursor: wait;
+    filter: saturate(0.7);
+    transform: none;
+  }
+
+  @media (max-width: 760px) {
+    .spin-overlay {
+      padding: 16px;
+      align-items: start;
+      padding-top: 48px;
+    }
+
+    .spin-modal h2 {
+      font-size: 28px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .spin-stage {
+      width: min(300px, 84vw);
+      margin-bottom: 16px;
+    }
+
+    .spin-cta {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .spin-close {
+      top: -12px;
+      right: 0;
+    }
+
+    .spin-result {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<script>
+  import { applyOfferToPage, loadOffer, priceFromPercent, RETAIL, saveOffer } from "../scripts/offer.js";
+
+  const prizes = [
+    { label: "5% off", type: "percent", value: 5 },
+    { label: "0% off", type: "percent", value: 0 },
+    { label: "50% off", type: "percent", value: 50 },
+    { label: "0% off", type: "percent", value: 0 },
+    { label: "1 more chance", type: "again", value: 0 },
+    { label: "0% off", type: "percent", value: 0 },
+    { label: "See you next time", type: "lose", value: 0 },
+    { label: "20% off", type: "percent", value: 20 },
+  ];
+
+  // Visual slices stay equal. Real discounts together are a 5% chance.
+  const weights = [1.7, 24.3, 1.6, 24.3, 20, 20, 6.4, 1.7];
+
+  const overlay = document.querySelector("[data-spin-overlay]");
+  const wheel = document.querySelector("[data-spin-wheel]");
+  const go = document.querySelector("[data-spin-go]");
+  const result = document.querySelector("[data-spin-result]");
+  const close = document.querySelector("[data-spin-close]");
+  const slice = 360 / prizes.length;
+  let rotation = 0;
+  let spinning = false;
+
+  const pickIndex = () => {
+    const total = weights.reduce((sum, value) => sum + value, 0);
+    let ticket = Math.random() * total;
+    for (let index = 0; index < weights.length; index += 1) {
+      ticket -= weights[index];
+      if (ticket <= 0) return index;
+    }
+    return 1;
+  };
+
+  const open = () => {
+    if (!overlay) return;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+  };
+
+  const hide = () => {
+    if (!overlay || spinning) return;
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+  };
+
+  const finish = (prize) => {
+    spinning = false;
+    if (go) go.disabled = false;
+
+    if (prize.type === "again") {
+      if (result) {
+        result.hidden = false;
+        result.textContent = "1 more chance — spin again!";
+      }
+      if (go) go.textContent = "Spin again";
+      return;
+    }
+
+    sessionStorage.setItem("stikr-spun", "1");
+
+    if (prize.type === "percent" && prize.value > 0) {
+      const unitPrice = priceFromPercent(prize.value);
+      saveOffer({
+        percent: prize.value,
+        unitPrice,
+        label: `${prize.value}% off`,
+        source: "spin",
+      });
+      applyOfferToPage();
+      if (result) {
+        result.hidden = false;
+        result.textContent = `You won ${prize.value}% off — you pay AED ${unitPrice} instead of AED ${RETAIL}`;
+      }
+      if (go) go.textContent = "Claim my discount";
+      return;
+    }
+
+    if (prize.type === "percent") {
+      if (result) {
+        result.hidden = false;
+        result.textContent = "0% off this round. Black Friday pricing still applies.";
+      }
+      if (go) go.textContent = "Continue";
+      return;
+    }
+
+    if (result) {
+      result.hidden = false;
+      result.textContent = "See you next time. Black Friday pricing still applies.";
+    }
+    if (go) go.textContent = "Close";
+  };
+
+  const spin = () => {
+    if (spinning || !wheel || !go) return;
+    if (go.textContent === "Claim my discount") {
+      hide();
+      document.querySelector("#pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (go.textContent === "Continue" || go.textContent === "Close") {
+      hide();
+      return;
+    }
+
+    spinning = true;
+    go.disabled = true;
+    if (result) result.hidden = true;
+
+    const index = pickIndex();
+    const center = index * slice + slice / 2;
+    const current = ((rotation % 360) + 360) % 360;
+    const target = (360 - center) % 360;
+    let delta = (target - current + 360) % 360;
+    delta += 360 * 6;
+    rotation += delta;
+
+    wheel.style.transition = "transform 4.8s cubic-bezier(0.12, 0.65, 0.08, 1)";
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    window.setTimeout(() => finish(prizes[index]), 4900);
+  };
+
+  applyOfferToPage(loadOffer());
+
+  go?.addEventListener("click", spin);
+  close?.addEventListener("click", hide);
+  overlay?.addEventListener("click", (event) => {
+    if (event.target === overlay) hide();
+  });
+
+  if (location.pathname === "/" && !sessionStorage.getItem("stikr-spun")) {
+    window.setTimeout(open, 900);
+  }
+</script>

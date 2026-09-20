@@ -1,0 +1,144 @@
+:root {
+  --bg: #111111;
+  --lime: #d2f654;
+  --lime-soft: #efffb7;
+  --lime-mid: #b8da45;
+  --lime-deep: #93b719;
+  --card: #222222;
+  --white: #ffffff;
+  --muted: rgba(255, 255, 255, 0.6);
+  --line: rgba(255, 255, 255, 0.3);
+  --display: "Oswald", "Impact", sans-serif;
+  --body: "Instrument Sans", system-ui, sans-serif;
+  --gutter: 5.555%;
+  --wrap: calc(100% - (var(--gutter) * 2));
+  --radius: 12px;
+  --radius-lg: 22px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.wrap {
+  width: var(--wrap);
+  margin-inline: auto;
+}
+
+.display {
+  font-family: var(--display);
+  font-weight: 500;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+}
+
+.lime {
+  color: var(--lime);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  background: var(--lime);
+  color: var(--bg);
+  font-size: 16px;
+  line-height: 28px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--lime);
+  border: 1px solid var(--lime);
+}
+
+.stikr-mark em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--lime);
+}
+
+.section-space {
+  padding-block: 80px;
+  min-width: 0;
+}
+
+@media (max-width: 980px) {
+  :root {
+    --gutter: 5.333%;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  .section-space {
+    padding-block: 48px;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --gutter: 5.333%;
+  }
+
+  .section-space {
+    padding-block: 36px;
+  }
+}
