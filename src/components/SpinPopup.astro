@@ -44,9 +44,8 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
 <div class="spin-overlay" data-spin-overlay hidden>
   <div class="spin-modal" role="dialog" aria-modal="true" aria-labelledby="spin-title">
     <button class="spin-close" type="button" data-spin-close aria-label="Close">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <circle cx="9" cy="9" r="8.5" stroke="white"></circle>
-        <path d="M6 6l6 6M12 6l-6 6" stroke="white" stroke-width="1.4"></path>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 3l8 8M11 3l-8 8" stroke="white" stroke-width="1.6"></path>
       </svg>
     </button>
     <h2 id="spin-title" class="display lime">You get a free spin</h2>
@@ -118,11 +117,14 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
     position: absolute;
     top: -8px;
     right: 8px;
+    display: grid;
+    place-items: center;
     width: 36px;
     height: 36px;
-    border: 0;
+    padding: 0;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.45);
     cursor: pointer;
   }
 
@@ -369,7 +371,10 @@ const dots = Array.from({ length: n }, (_, index) => polar(index * slice - Math.
     if (event.target === overlay) hide();
   });
 
-  if (location.pathname === "/") {
-    window.setTimeout(open, 900);
+  if (location.pathname === "/" && !sessionStorage.getItem("stikr-spun")) {
+    window.setTimeout(() => {
+      sessionStorage.setItem("stikr-spun", "1");
+      open();
+    }, 900);
   }
 </script>
