@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
 
       <section class="ty-card">
         <div class="product">
-          <img src="/images/product.png" alt="STIKR pouch" />
+          <img src="/images/product.png" alt="STIKR pouch" data-ty-img />
           <div>
             <p class="lime display small" data-ty-status>Order confirmed</p>
             <h2 data-ty-id></h2>
@@ -335,6 +335,11 @@ import Layout from "../layouts/Layout.astro";
       : `Thanks ${customer.name || ""}. Order ${order.id} is saved for delivery.`);
     set("[data-ty-status]", paid ? "Paid with Nomod" : "Order confirmed");
     set("[data-ty-id]", order.id);
+    const tyImg = document.querySelector("[data-ty-img]");
+    if (tyImg && order.color === "pink") {
+      tyImg.src = "/images/product-pink.png";
+      tyImg.alt = "STIKR pouch in pink";
+    }
     set("[data-ty-product]", order.quantity === "—" ? order.product : `${order.product} × ${order.quantity}`);
     set("[data-ty-name]", customer.name || "—");
     set("[data-ty-phone]", customer.phone || "—");

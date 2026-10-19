@@ -1,12 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+// All benefit photos show at 3:2. focus keeps the face or the bag inside the crop
+// (the wide photos are already 3:2; the square ones crop vertically around the bag).
 const benefits = [
-  { img: "/images/benefit-1.png", title: "Cleaner transitions between sets", pos: "tl" },
-  { img: "/images/benefit-2.png", title: "Zero interruptions mid-workout", pos: "tr" },
-  { img: "/images/benefit-3.png", title: "One place for all essentials", pos: "mid" },
-  { img: "/images/benefit-5.png", title: "A setup that moves as fast as you do", pos: "bl" },
-  { img: "/images/benefit-4.png", title: "A workout where you stay dialed", pos: "br" },
+  { img: "/images/benefit-1.png", title: "Cleaner transitions between sets", pos: "tl", focus: "50% 50%" },
+  { img: "/images/benefit-2.png", title: "Zero interruptions mid-workout", pos: "tr", focus: "50% 50%" },
+  { img: "/images/benefit-3.png", title: "One place for all essentials", pos: "mid", focus: "50% 100%" },
+  { img: "/images/benefit-5.png", title: "A setup that moves as fast as you do", pos: "bl", focus: "50% 60%" },
+  { img: "/images/benefit-4.png", title: "A workout where you stay dialed", pos: "br", focus: "50% 50%" },
 ];
 
 const colors = [
@@ -200,7 +202,7 @@ const costs = [
           <img class="dash a8" src="/images/arrow-8.png" alt="" />
           {benefits.map((item) => (
             <article class={`benefit-card ${item.pos}`}>
-              <img src={item.img} alt="" />
+              <img src={item.img} alt="" style={`object-position: ${item.focus}`} />
               <p>{item.title}</p>
             </article>
           ))}
@@ -407,9 +409,14 @@ const costs = [
               <span>A permanent upgrade to your training flow.</span>
               <strong class="display lime">AED 149</strong>
             </div>
+            <div class="price-colors">
+              <span>Choose your color</span>
+              <a href="/checkout?color=black" style="--swatch: #111">Black</a>
+              <a href="/checkout?color=pink" style="--swatch: #d98a98">Pink</a>
+            </div>
             <a class="btn full" href="/checkout">Upgrade My Training Setup</a>
           </div>
-          <img src="/images/product.png" alt="STIKR product" />
+          <img src="/images/product-duo.png" alt="STIKR pouch in pink and black" />
         </div>
       </div>
     </section>
@@ -460,10 +467,11 @@ const costs = [
     overflow: hidden;
   }
 
+  /* Never taller than the screen, so the hero (and the bag in it) is never cut off at the fold. */
   .hero {
     position: relative;
     width: 100%;
-    height: 56.388vw;
+    height: min(56.388vw, 100svh);
     min-height: 640px;
     overflow: hidden;
     background: #111;
@@ -623,18 +631,13 @@ const costs = [
     overflow: hidden;
   }
 
+  /* Full-bleed photo; the crop leans low so the STIKR bag (44-88% down the photo) stays in view
+     even when the hero is capped to a short screen. */
   .hero-still {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    animation: hero-pan 14s ease-in-out infinite;
-    transform-origin: 30% 60%;
-  }
-
-  @keyframes hero-pan {
-    0% { transform: scale(1.04) translate(0, 0); }
-    50% { transform: scale(1.14) translate(-3%, -2%); }
-    100% { transform: scale(1.04) translate(0, 0); }
+    object-position: 50% 30%;
   }
 
   .hero-fade {
@@ -714,7 +717,7 @@ const costs = [
   }
 
   .problem-grid img {
-    height: 200px;
+    height: auto;
   }
 
   .problem-grid h3,
@@ -747,7 +750,7 @@ const costs = [
   .intro-photo {
     width: 580px;
     max-width: 100%;
-    height: 400px;
+    height: auto;
   }
 
   .wordmark {
@@ -759,14 +762,15 @@ const costs = [
   .benefits-stage {
     position: relative;
     width: 100%;
-    aspect-ratio: 1280 / 870;
+    aspect-ratio: 1280 / 1245;
     margin-top: 24px;
   }
 
   .benefit-card {
     position: absolute;
     width: 37.5%;
-    height: 28.74%;
+    height: auto;
+    padding-bottom: 16px;
     background: var(--card);
     border-radius: 22px;
     overflow: hidden;
@@ -776,13 +780,14 @@ const costs = [
 
   .benefit-card.tl { left: 0; top: 0; }
   .benefit-card.tr { left: 53.13%; top: 0; }
-  .benefit-card.mid { left: 34.92%; top: 35.63%; }
-  .benefit-card.bl { left: 9.38%; top: 71.26%; }
-  .benefit-card.br { left: 62.5%; top: 71.26%; }
+  .benefit-card.mid { left: 34.92%; top: 34.94%; }
+  .benefit-card.bl { left: 9.38%; top: 69.88%; }
+  .benefit-card.br { left: 62.5%; top: 69.88%; }
 
   .benefit-card img {
     width: calc(100% - 20px);
-    height: 72%;
+    height: auto;
+    aspect-ratio: 3 / 2;
     margin: 10px 10px 0;
     object-fit: cover;
     border-radius: 16px;
@@ -805,31 +810,31 @@ const costs = [
   }
 
   .a6-top {
-    top: 14.37%;
+    top: 15.06%;
     left: 38.28%;
     width: 14.06%;
     height: auto;
   }
 
   .a6-bot {
-    top: 85.63%;
+    top: 84.94%;
     left: 47.66%;
     width: 14.06%;
     height: auto;
   }
 
   .a7 {
-    top: 14.37%;
+    top: 15.06%;
     left: 73.2%;
     width: 26.8%;
-    height: 35.74%;
+    height: 34.94%;
   }
 
   .a8 {
-    top: 50.11%;
+    top: 50%;
     left: 0;
     width: 34.14%;
-    height: 35.52%;
+    height: 34.94%;
     transform: scaleX(-1);
   }
 
@@ -991,6 +996,7 @@ const costs = [
   .color-col.is-open {
     flex: 36.67 1 0;
     color: white;
+    background: #111;
   }
 
   .color-fill {
@@ -1005,7 +1011,8 @@ const costs = [
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: top center;
     opacity: 0;
     transform: scale(1.06);
     transition: opacity 400ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1);
@@ -1319,7 +1326,45 @@ const costs = [
   }
 
   .pricing-grid > img {
-    width: 320px;
+    width: 440px;
+  }
+
+  .price-colors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+  }
+
+  .price-colors span {
+    margin-right: auto;
+    color: var(--muted);
+  }
+
+  .price-colors a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: white;
+    text-decoration: none;
+  }
+
+  .price-colors a::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  }
+
+  .price-colors a:hover,
+  .price-colors a:focus-visible {
+    border-color: var(--lime);
   }
 
   .final-cta {
@@ -1544,7 +1589,16 @@ const costs = [
       width: 100%;
       height: min(58vh, 460px);
       min-height: 280px;
+      /* Start below the fixed header so the runner's face isn't hidden behind it. */
+      margin-top: 76px;
       order: 1;
+    }
+
+    /* Mobile: full-width photo, cropped to keep the runner's face and the bag (44-88% down) in frame. */
+    .hero-still {
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 24%;
     }
 
     .hero-fade {
@@ -1653,7 +1707,6 @@ const costs = [
     .intro-photo {
       width: 100%;
       height: auto;
-      aspect-ratio: 580 / 400;
     }
 
     .quotes-photo {
@@ -1709,7 +1762,7 @@ const costs = [
     }
 
     .color-col.is-open {
-      height: min(72vw, 380px);
+      height: calc(100vw + 120px);
     }
 
     .color-num {
@@ -1818,7 +1871,7 @@ const costs = [
     }
 
     .pricing-grid > img {
-      width: min(240px, 70%);
+      width: min(340px, 90%);
       margin: 0 auto;
     }
 
@@ -1856,9 +1909,9 @@ const costs = [
     }
 
     .hero-media {
-      height: 62vw;
-      min-height: 280px;
-      max-height: 420px;
+      height: min(112vw, 460px);
+      min-height: 0;
+      max-height: none;
     }
 
     .benefits-stage {
@@ -1875,7 +1928,7 @@ const costs = [
     }
 
     .color-col.is-open {
-      height: min(88vw, 340px);
+      height: calc(100vw + 120px);
     }
   }
 

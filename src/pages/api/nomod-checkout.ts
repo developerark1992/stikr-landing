@@ -5,6 +5,8 @@ export const prerender = false;
 
 const ALLOWED_PERCENTS = [0, 5, 10, 20, 50];
 
+const COLORS: Record<string, string> = { black: "Black", pink: "Pink" };
+
 const money = (value: number) => value.toFixed(2);
 
 const splitName = (fullName: string) => {
@@ -42,6 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
   const city = String(customer.city || "").trim();
   const region = String(customer.region || "").trim();
   const country = String(customer.country || "").trim();
+  const color = Object.hasOwn(COLORS, String(body.color)) ? String(body.color) : "black";
   const quantity = Math.min(10, Math.max(1, Number(body.quantity) || 1));
   const requestedPercent = Number(body.discountPercent);
   const percent = ALLOWED_PERCENTS.includes(requestedPercent) ? requestedPercent : 0;
@@ -69,8 +72,8 @@ export const POST: APIRoute = async ({ request }) => {
     discount: money(discount),
     items: [
       {
-        item_id: "stikr-pouch",
-        name: "STIKR magnetic gym pouch",
+        item_id: `stikr-pouch-${color}`,
+        name: `STIKR magnetic gym pouch — ${COLORS[color]}`,
         quantity,
         unit_amount: money(RETAIL),
         discount_type: "flat",
@@ -92,6 +95,7 @@ export const POST: APIRoute = async ({ request }) => {
     metadata: {
       orderid: orderId,
       qty: String(quantity),
+      color,
       city: city.slice(0, 512),
       region: region.slice(0, 512),
       address,
