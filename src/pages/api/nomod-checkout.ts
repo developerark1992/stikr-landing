@@ -17,18 +17,13 @@ const splitName = (fullName: string) => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
-  // import.meta.env is fixed at build time (Vercel); process.env is read at runtime (Hostinger's .env).
-  const apiKey =
-    import.meta.env.NOMOD_API_KEY ||
-    import.meta.env.NOMOD_HOSTED_CHECKOUT_API_KEY ||
-    process.env.NOMOD_API_KEY ||
-    process.env.NOMOD_HOSTED_CHECKOUT_API_KEY;
+  const apiKey = import.meta.env.NOMOD_API_KEY || import.meta.env.NOMOD_HOSTED_CHECKOUT_API_KEY;
 
   if (!apiKey) {
     return Response.json(
       {
         error:
-          "Nomod is not configured yet. Add NOMOD_API_KEY to the server's .env (or Vercel) from Nomod Hosted Checkout.",
+          "Nomod is not configured yet. Add NOMOD_API_KEY in Vercel (and a local .env) from Nomod Hosted Checkout.",
       },
       { status: 503 },
     );
@@ -124,10 +119,7 @@ export const POST: APIRoute = async ({ request }) => {
       result?.error ||
       result?.detail ||
       "Nomod could not start checkout. Check the API key and try again.";
-    return Response.json(
-      { error: typeof message === "string" ? message : JSON.stringify(message) },
-      { status: 502 },
-    );
+    return Response.json({ error: String(message) }, { status: 502 });
   }
 
   return Response.json({
