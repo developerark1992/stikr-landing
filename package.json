@@ -9,9 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:hostinger": "DEPLOY_TARGET=hostinger astro build"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.8",
     "@astrojs/vercel": "^11.0.10",
     "astro": "^7.3.3"
   },
